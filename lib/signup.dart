@@ -301,7 +301,6 @@ class _SignupState extends State<Signup> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: TextField(
                                         controller: bioController,
-                                        obscureText: true,
                                         decoration: const InputDecoration(
                                             enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
@@ -350,10 +349,20 @@ class _SignupState extends State<Signup> {
                                           user.set('cookType', _selectedType);
                                           user.set('bio', bioController.text);
                                           if (_image != null) {
-                                            final ParseFileBase parseFile =
-                                                ParseFile(File(_image.path));
-
-                                            user.set('img', parseFile);
+                                            final ParseResponse fileResponse =
+                                                await ParseFile(_image,
+                                                        debug: true)
+                                                    .save();
+                                            if (fileResponse.success) {
+                                              final ParseFile parseFile =
+                                                  fileResponse.result
+                                                      as ParseFile;
+                                              user.set('img', parseFile);
+                                            } else {
+                                              _offLoading();
+                                              showAlertDialog(context, 'Erreur',
+                                                  "Erreur de sauvegarde d'image");
+                                            }
                                           }
                                           final ParseResponse response =
                                               await user.signUp();

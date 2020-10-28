@@ -12,6 +12,7 @@ AppState appReducer(AppState state, dynamic action) {
 
 User _userReducer(User state, dynamic action) {
   if (action.key == BlablacookActions.UpdateUser) {
+    print(action.value.get('img'));
     return User(
       action.value.get('email') as String,
       action.value.get('type') as String,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -19,6 +20,9 @@ class _ProfileState extends State<Profile> {
         return SafeArea(
           child: Column(
             children: <Widget>[
+              Image.network(
+                user.img.url as String,
+              ),
               Text(user.email as String),
               Text(user.type as String),
               Text(user.bio != null ? user.bio as String : 'Pas de bio'),
