@@ -13,11 +13,12 @@ class _OfferState extends State<Offer> {
     return Scaffold(
         body: Center(
             child: StoreConnector<dynamic, dynamic>(
+      // ignore: always_specify_types
       converter: (store) => store.state.user,
-      builder: (context, dynamic user) {
+      builder: (BuildContext context, dynamic user) {
         return SafeArea(
           child: Column(
-            children: <Widget>[
+            children: const <Widget>[
               Text('offer page'),
             ],
           ),

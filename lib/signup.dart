@@ -19,18 +19,21 @@ class _SignupState extends State<Signup> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
-  final picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
   bool _cooker = false;
   File _image;
   bool _loading = false;
+  // ignore: always_specify_types
   List<String> _selectedType = [];
-  static final _half = typeCook.length / 2;
+  static final double _half = typeCook.length / 2;
   final List<String> _typeCookFirst = typeCook.sublist(0, _half.toInt());
   final List<String> _typeCookSec =
       typeCook.sublist(_half.toInt(), typeCook.length);
 
+  // ignore: always_specify_types
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final PickedFile pickedFile =
+        await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -70,8 +73,8 @@ class _SignupState extends State<Signup> {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Icon(
                   Icons.arrow_back_ios,
                   color: Colors.black,
@@ -198,6 +201,7 @@ class _SignupState extends State<Signup> {
                               child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
+                                  // ignore: always_specify_types
                                   children: [
                                     GestureDetector(
                                       onTap: _handleTap,
@@ -233,6 +237,7 @@ class _SignupState extends State<Signup> {
                             ),
                             if (_cooker)
                               Column(
+                                // ignore: always_specify_types
                                 children: [
                                   const Padding(
                                     padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
@@ -252,12 +257,13 @@ class _SignupState extends State<Signup> {
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
+                                      // ignore: always_specify_types
                                       children: [
                                         Expanded(
                                           flex: 5,
                                           child: CheckboxGroup(
                                               labels: _typeCookSec,
-                                              labelStyle: TextStyle(),
+                                              labelStyle: const TextStyle(),
                                               onSelected:
                                                   (List<String> checked) {
                                                 setState(() {
@@ -269,7 +275,7 @@ class _SignupState extends State<Signup> {
                                           flex: 5,
                                           child: CheckboxGroup(
                                               labels: _typeCookFirst,
-                                              labelStyle: TextStyle(),
+                                              labelStyle: const TextStyle(),
                                               onSelected:
                                                   (List<String> checked) {
                                                 setState(() {
@@ -335,7 +341,7 @@ class _SignupState extends State<Signup> {
                                     : () async {
                                         _onLoading();
                                         try {
-                                          final user = ParseUser(
+                                          final ParseUser user = ParseUser(
                                               emailController.text,
                                               passwordController.text,
                                               emailController.text);
@@ -349,7 +355,8 @@ class _SignupState extends State<Signup> {
 
                                             user.set('img', parseFile);
                                           }
-                                          final response = await user.signUp();
+                                          final ParseResponse response =
+                                              await user.signUp();
                                           if (response.success) {
                                             _offLoading();
                                             Navigator.of(context).pop();

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/src/store.dart';
 import 'actions.dart';
 
 class Login extends StatefulWidget {
@@ -120,7 +119,8 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 30),
                           StoreConnector<dynamic, Function(dynamic)>(
-                              converter: (Store store) {
+                              // ignore: always_specify_types
+                              converter: (store) {
                             // Return a `VoidCallback`, which is a fancy name for a function
                             // with no parameters. It only dispatches an Increment action.
                             return (dynamic user) {
@@ -129,6 +129,7 @@ class _LoginState extends State<Login> {
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
                             };
+                            // ignore: always_specify_types
                           }, builder: (BuildContext context, callback) {
                             return ButtonTheme(
                               minWidth: 180.0,
@@ -142,11 +143,12 @@ class _LoginState extends State<Login> {
                                     : () async {
                                         _onLoading();
                                         try {
-                                          final user = ParseUser(
+                                          final ParseUser user = ParseUser(
                                               emailController.text,
                                               passwordController.text,
                                               emailController.text);
-                                          final response = await user.login();
+                                          final ParseResponse response =
+                                              await user.login();
                                           if (response.success) {
                                             callback(response.result);
                                             if (response.result.get('type') ==
@@ -180,7 +182,8 @@ class _LoginState extends State<Login> {
                             child: RaisedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(color: Colors.transparent)),
+                                  side: const BorderSide(
+                                      color: Colors.transparent)),
                               onPressed: () {
                                 Navigator.push<MaterialPageRoute<dynamic>>(
                                   context,
@@ -195,13 +198,12 @@ class _LoginState extends State<Login> {
                               textColor: Colors.white,
                             ),
                           ),
-                          _loading
-                              ? LoadingBumpingLine.circle(
-                                  size: 30,
-                                  backgroundColor: Colors.orange,
-                                  duration: Duration(milliseconds: 500),
-                                )
-                              : const SizedBox(height: 0)
+                          if (_loading)
+                            LoadingBumpingLine.circle(
+                              size: 30,
+                              backgroundColor: Colors.orange,
+                              duration: const Duration(milliseconds: 500),
+                            )
                         ],
                       ),
                     ),

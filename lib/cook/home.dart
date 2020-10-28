@@ -21,11 +21,13 @@ class _HomeState extends State<Home> {
     return Scaffold(
         bottomNavigationBar: ConvexAppBar(
           backgroundColor: Colors.orange,
-          items: [
-            TabItem<dynamic>(icon: Icons.home, title: 'Accueil'),
-            TabItem<dynamic>(icon: Icons.restaurant, title: 'Demande'),
-            TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
-            TabItem<dynamic>(icon: Icons.people, title: 'Profile'),
+          // ignore: always_specify_types
+          // ignore: prefer_const_literals_to_create_immutables
+          items: <TabItem>[
+            const TabItem<dynamic>(icon: Icons.home, title: 'Accueil'),
+            const TabItem<dynamic>(icon: Icons.restaurant, title: 'Demande'),
+            const TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
+            const TabItem<dynamic>(icon: Icons.people, title: 'Profile'),
           ],
           initialActiveIndex: 0,
           onTap: (int i) {
@@ -36,8 +38,9 @@ class _HomeState extends State<Home> {
         ),
         body: Center(
             child: StoreConnector<dynamic, dynamic>(
+          // ignore: always_specify_types
           converter: (store) => store.state.user,
-          builder: (context, dynamic user) {
+          builder: (BuildContext context, dynamic user) {
             switch (_idx) {
               case 0:
                 return Offer();
@@ -51,6 +54,10 @@ class _HomeState extends State<Home> {
               case 3:
                 return Profile();
                 break;
+              default:
+                {
+                  return Offer();
+                }
             }
           },
         )));

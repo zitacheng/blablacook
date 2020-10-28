@@ -1,14 +1,12 @@
 import 'package:blablacook/appstate.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:blablacook/login.dart';
+// ignore: library_prefixes
 import 'package:blablacook/cook/home.dart' as cookHome;
-import 'package:blablacook/cook/profile.dart' as cookProfile;
-import 'package:blablacook/cook/add.dart' as cookAdd;
 import 'login.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-
 import 'reducers.dart';
 // One simple action: Increment
 
@@ -18,10 +16,10 @@ import 'reducers.dart';
 void main() {
   Parse().initialize('hVhUqLB5P7Lh3HqDLmgndx6sg7KlOvomuZNSUJl3',
       'https://parseapi.back4app.com/',
-      masterKey: "yWrffJcmnXNViPRLTZAdObrSHuw3XqowuydWZtbm");
+      masterKey: 'yWrffJcmnXNViPRLTZAdObrSHuw3XqowuydWZtbm');
 
   final Store<dynamic> store =
-      Store<AppState>(appReducer, initialState: AppState());
+      Store<AppState>(appReducer, initialState: const AppState());
 
   runApp(MyApp(store: store));
 }
@@ -29,7 +27,8 @@ void main() {
 class MyApp extends StatelessWidget {
   final Store<dynamic> store;
 
-  MyApp({Key key, this.store}) : super(key: key);
+  // ignore: sort_constructors_first
+  const MyApp({Key key, this.store}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -37,10 +36,11 @@ class MyApp extends StatelessWidget {
     return StoreProvider<dynamic>(
       store: store,
       child: MaterialApp(
-        initialRoute: "/",
+        initialRoute: '/',
+        // ignore: always_specify_types
         routes: {
-          "/": (BuildContext context) => Login(),
-          "/cookOffer": (BuildContext context) => cookHome.Home(),
+          '/': (BuildContext context) => const Login(),
+          '/cookOffer': (BuildContext context) => cookHome.Home(),
         },
         title: 'Flutter Demo',
         theme: ThemeData(

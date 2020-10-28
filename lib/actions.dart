@@ -3,6 +3,7 @@ enum BlablacookActions { UpdateUser }
 class MyAction {
   BlablacookActions key;
   dynamic value;
+  // ignore: sort_constructors_first
   MyAction(this.key, this.value);
 
   // ThunkAction<AppState> getDate = (Store<AppState> store) {
