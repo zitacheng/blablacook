@@ -149,6 +149,7 @@ class _LoginState extends State<Login> {
                                               await user.login();
                                           if (response.success) {
                                             callback(response.result);
+                                            inspect(response.result);
                                             if (response.result.get('type') ==
                                                 'cook') {
                                               Navigator.of(context)

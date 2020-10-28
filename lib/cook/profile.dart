@@ -21,6 +21,7 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Text(user.email as String),
               Text(user.type as String),
+              Text(user.bio != null ? user.bio as String : 'Pas de bio'),
             ],
           ),
         );
