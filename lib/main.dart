@@ -8,10 +8,6 @@ import 'package:blablacook/login.dart';
 import 'package:blablacook/cook/home.dart' as cookHome;
 import 'login.dart';
 import 'reducers.dart';
-// One simple action: Increment
-
-// The reducer, which takes the previous count and increments it in response
-// to an Increment action.
 
 void main() {
   Parse().initialize('hVhUqLB5P7Lh3HqDLmgndx6sg7KlOvomuZNSUJl3',

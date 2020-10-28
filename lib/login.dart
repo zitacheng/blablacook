@@ -124,8 +124,6 @@ class _LoginState extends State<Login> {
                             // Return a `VoidCallback`, which is a fancy name for a function
                             // with no parameters. It only dispatches an Increment action.
                             return (dynamic user) {
-                              print('HERE');
-                              inspect(user);
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
                             };
@@ -156,6 +154,10 @@ class _LoginState extends State<Login> {
                                               Navigator.of(context)
                                                   .pushNamed('/cookOffer');
                                             }
+                                            //  else {
+                                            //   Navigator.of(context)
+                                            //       .pushNamed('/clientHome');
+                                            // }
                                             _offLoading();
                                           } else {
                                             showAlertDialog(context, 'Erreur',
