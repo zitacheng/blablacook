@@ -1,11 +1,11 @@
 import 'dart:developer';
-import 'package:blablacook/cook/home.dart';
 import 'package:blablacook/signup.dart';
 import 'package:blablacook/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/src/store.dart';
 import 'actions.dart';
 
 class Login extends StatefulWidget {
@@ -68,18 +68,19 @@ class _LoginState extends State<Login> {
                           Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextField(
+                                keyboardType: TextInputType.emailAddress,
                                 controller: emailController,
                                 decoration: const InputDecoration(
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(40.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
                                     ),
                                     borderSide: BorderSide(
                                         color: Colors.transparent, width: 0.0),
                                   ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(40.0),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
                                     ),
                                     borderSide: BorderSide(
                                         color: Colors.transparent, width: 0.0),
@@ -96,16 +97,16 @@ class _LoginState extends State<Login> {
                                 controller: passwordController,
                                 obscureText: true,
                                 decoration: const InputDecoration(
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(40.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
                                     ),
                                     borderSide: BorderSide(
                                         color: Colors.transparent, width: 0.0),
                                   ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(40.0),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
                                     ),
                                     borderSide: BorderSide(
                                         color: Colors.transparent, width: 0.0),
@@ -119,7 +120,7 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 30),
                           StoreConnector<dynamic, Function(dynamic)>(
-                              converter: (store) {
+                              converter: (Store store) {
                             // Return a `VoidCallback`, which is a fancy name for a function
                             // with no parameters. It only dispatches an Increment action.
                             return (dynamic user) {
@@ -128,14 +129,14 @@ class _LoginState extends State<Login> {
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
                             };
-                          }, builder: (context, callback) {
+                          }, builder: (BuildContext context, callback) {
                             return ButtonTheme(
                               minWidth: 180.0,
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
-                                    side:
-                                        BorderSide(color: Colors.transparent)),
+                                    side: const BorderSide(
+                                        color: Colors.transparent)),
                                 onPressed: _loading
                                     ? null
                                     : () async {

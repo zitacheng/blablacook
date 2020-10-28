@@ -5,6 +5,9 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:blablacook/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
+
+import 'cookType.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -15,10 +18,16 @@ class _SignupState extends State<Signup> {
   final List<String> list = null;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
   final picker = ImagePicker();
   bool _cooker = false;
   File _image;
   bool _loading = false;
+  List<String> _selectedType = [];
+  static final _half = typeCook.length / 2;
+  final List<String> _typeCookFirst = typeCook.sublist(0, _half.toInt());
+  final List<String> _typeCookSec =
+      typeCook.sublist(_half.toInt(), typeCook.length);
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -120,31 +129,31 @@ class _SignupState extends State<Signup> {
                                               : Container(
                                                   width: 110.0,
                                                   height: 110.0,
-                                                  decoration: new BoxDecoration(
+                                                  decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      image:
-                                                          new DecorationImage(
-                                                              fit: BoxFit.cover,
-                                                              image: FileImage(
-                                                                  _image))),
+                                                      image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: FileImage(
+                                                              _image))),
                                                 ))),
                                 )),
                             Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: TextField(
+                                  keyboardType: TextInputType.emailAddress,
                                   controller: emailController,
                                   decoration: const InputDecoration(
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(40.0),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(40.0),
                                       ),
                                       borderSide: BorderSide(
                                           color: Colors.transparent,
                                           width: 0.0),
                                     ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(40.0),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(40.0),
                                       ),
                                       borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -162,17 +171,17 @@ class _SignupState extends State<Signup> {
                                   controller: passwordController,
                                   obscureText: true,
                                   decoration: const InputDecoration(
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(40.0),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40.0),
                                         ),
                                         borderSide: BorderSide(
                                             color: Colors.transparent,
                                             width: 0.0),
                                       ),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(40.0),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40.0),
                                         ),
                                         borderSide: BorderSide(
                                             color: Colors.transparent,
@@ -185,50 +194,142 @@ class _SignupState extends State<Signup> {
                                       contentPadding: EdgeInsets.all(20.0))),
                             ),
                             Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: _handleTap,
-                                        child: Text(
-                                          "Cuisinier",
-                                          style: TextStyle(
-                                              fontFamily: 'Amatic',
-                                              fontSize: 24,
-                                              color: !_cooker
-                                                  ? Colors.black
-                                                  : Colors.orange,
-                                              fontWeight: !_cooker
-                                                  ? FontWeight.w400
-                                                  : FontWeight.w900),
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: _handleTap,
+                                      child: Text(
+                                        'Cuisinier',
+                                        style: TextStyle(
+                                            fontFamily: 'Amatic',
+                                            fontSize: 24,
+                                            color: !_cooker
+                                                ? Colors.black
+                                                : Colors.orange,
+                                            fontWeight: !_cooker
+                                                ? FontWeight.w400
+                                                : FontWeight.w900),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: _handleTap,
+                                      child: Text(
+                                        'Client',
+                                        style: TextStyle(
+                                            fontFamily: 'Amatic',
+                                            fontSize: 24,
+                                            color: !_cooker
+                                                ? Colors.orange
+                                                : Colors.black,
+                                            fontWeight: _cooker
+                                                ? FontWeight.w400
+                                                : FontWeight.w900),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                            if (_cooker)
+                              Column(
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Choisisser au moins une type de cuisines:',
+                                        style: TextStyle(
+                                          fontFamily: 'LatoLight',
+                                          fontSize: 18,
                                         ),
                                       ),
-                                      GestureDetector(
-                                        onTap: _handleTap,
-                                        child: Text(
-                                          "Client",
-                                          style: TextStyle(
-                                              fontFamily: 'Amatic',
-                                              fontSize: 24,
-                                              color: !_cooker
-                                                  ? Colors.orange
-                                                  : Colors.black,
-                                              fontWeight: _cooker
-                                                  ? FontWeight.w400
-                                                  : FontWeight.w900),
+                                    ),
+                                  ),
+                                  Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: CheckboxGroup(
+                                              labels: _typeCookSec,
+                                              labelStyle: TextStyle(),
+                                              onSelected:
+                                                  (List<String> checked) {
+                                                setState(() {
+                                                  _selectedType = checked;
+                                                });
+                                              }),
+                                        ),
+                                        Expanded(
+                                          flex: 5,
+                                          child: CheckboxGroup(
+                                              labels: _typeCookFirst,
+                                              labelStyle: TextStyle(),
+                                              onSelected:
+                                                  (List<String> checked) {
+                                                setState(() {
+                                                  _selectedType = checked;
+                                                });
+                                              }),
+                                        ),
+                                      ]),
+                                  const Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Bio:',
+                                        style: TextStyle(
+                                          fontFamily: 'LatoLight',
+                                          fontSize: 18,
                                         ),
                                       ),
-                                    ])),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: TextField(
+                                        controller: bioController,
+                                        obscureText: true,
+                                        decoration: const InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(40.0),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(40.0),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0.0),
+                                            ),
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            prefixIcon:
+                                                Icon(Icons.account_circle),
+                                            contentPadding:
+                                                EdgeInsets.all(20.0))),
+                                  ),
+                                ],
+                              ),
                             const SizedBox(height: 30),
                             ButtonTheme(
                               minWidth: 180.0,
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
-                                    side:
-                                        BorderSide(color: Colors.transparent)),
+                                    side: const BorderSide(
+                                        color: Colors.transparent)),
                                 onPressed: _loading
                                     ? null
                                     : () async {
@@ -240,14 +341,15 @@ class _SignupState extends State<Signup> {
                                               emailController.text);
                                           user.set('type',
                                               _cooker ? 'cook' : 'client');
+                                          user.set('cookType', _selectedType);
+                                          user.set('bio', bioController.text);
                                           if (_image != null) {
-                                            ParseFileBase parseFile =
+                                            final ParseFileBase parseFile =
                                                 ParseFile(File(_image.path));
 
                                             user.set('img', parseFile);
                                           }
-
-                                          var response = await user.signUp();
+                                          final response = await user.signUp();
                                           if (response.success) {
                                             _offLoading();
                                             Navigator.of(context).pop();
@@ -267,13 +369,13 @@ class _SignupState extends State<Signup> {
                                 textColor: Colors.white,
                               ),
                             ),
-                            _loading
-                                ? LoadingBumpingLine.circle(
-                                    size: 30,
-                                    backgroundColor: Colors.orange,
-                                    duration: Duration(milliseconds: 500),
-                                  )
-                                : const SizedBox(height: 0)
+                            if (_loading)
+                              LoadingBumpingLine.circle(
+                                size: 30,
+                                backgroundColor: Colors.orange,
+                                duration: const Duration(milliseconds: 500),
+                              ),
+                            const SizedBox(height: 60),
                           ],
                         ),
                       ),

@@ -31,6 +31,8 @@ dependencies:
   convex_bottom_bar: ^2.6.0
   loading_animations: ^2.1.0
   flutter_redux: ^0.7.0
+  grouped_buttons: ^1.0.4
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
@@ -67,17 +69,16 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Windsong
+    - family: LatoThin
       fonts:
-        - asset: fonts/Windsong.ttf
-          weight: 700
-    - family: Domine
-      fonts:
-        - asset: fonts/Domine.ttf
+        - asset: fonts/LatoThin.ttf
           weight: 300
     - family: Amatic
       fonts:
         - asset: fonts/Amatic.ttf
+    - family: LatoLight
+      fonts:
+        - asset: fonts/LatoLight.ttf
 
   #   - family: Schyler
   #     fonts:
