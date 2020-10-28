@@ -5,12 +5,13 @@ class User {
   String email = '';
   String type = '';
   String bio = '';
+  String username = '';
   // ignore: avoid_init_to_null
   List<dynamic> cookType = null;
   // ignore: avoid_init_to_null
   ParseFile img = null;
   // ignore: sort_constructors_first
-  User(this.email, this.type, this.bio, this.cookType, this.img);
+  User(this.email, this.type, this.bio, this.cookType, this.img, this.username);
 }
 
 @immutable

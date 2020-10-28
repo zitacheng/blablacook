@@ -19,6 +19,7 @@ User _userReducer(User state, dynamic action) {
       action.value.get('bio') as String,
       action.value.get('cookType') as List<dynamic>,
       action.value.get('img') as ParseFile,
+      action.value.get('username') as String,
     );
   }
   return state;

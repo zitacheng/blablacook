@@ -19,6 +19,7 @@ class _SignupState extends State<Signup> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final ImagePicker picker = ImagePicker();
   bool _cooker = false;
   File _image;
@@ -139,6 +140,33 @@ class _SignupState extends State<Signup> {
                                                           image: FileImage(
                                                               _image))),
                                                 ))),
+                                )),
+                            Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: TextField(
+                                  controller: usernameController,
+                                  decoration: const InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(40.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 0.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(40.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 0.0),
+                                    ),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    prefixIcon: Icon(Icons.account_box),
+                                    hintText: "Nom d'utilisateur",
+                                  ),
                                 )),
                             Padding(
                                 padding: const EdgeInsets.all(16.0),
@@ -348,6 +376,8 @@ class _SignupState extends State<Signup> {
                                               _cooker ? 'cook' : 'client');
                                           user.set('cookType', _selectedType);
                                           user.set('bio', bioController.text);
+                                          user.set('username',
+                                              usernameController.text);
                                           if (_image != null) {
                                             final ParseResponse fileResponse =
                                                 await ParseFile(_image,

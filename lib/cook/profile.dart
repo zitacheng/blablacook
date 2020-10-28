@@ -20,9 +20,15 @@ class _ProfileState extends State<Profile> {
         return SafeArea(
           child: Column(
             children: <Widget>[
-              Image.network(
-                user.img.url as String,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(60.0),
+                child: Image.network(
+                  user.img.url as String,
+                  width: 120,
+                  height: 120,
+                ),
               ),
+              Text(user.username as String),
               Text(user.email as String),
               Text(user.type as String),
               Text(user.bio != null ? user.bio as String : 'Pas de bio'),

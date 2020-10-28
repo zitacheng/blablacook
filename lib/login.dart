@@ -16,7 +16,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   bool _loading = false;
 
   void _onLoading() {
@@ -67,8 +67,7 @@ class _LoginState extends State<Login> {
                           Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextField(
-                                keyboardType: TextInputType.emailAddress,
-                                controller: emailController,
+                                controller: usernameController,
                                 decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -86,8 +85,8 @@ class _LoginState extends State<Login> {
                                   ),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  prefixIcon: Icon(Icons.email),
-                                  hintText: 'Email',
+                                  prefixIcon: Icon(Icons.account_circle),
+                                  hintText: "Email / Nom d'utilisateur",
                                 ),
                               )),
                           Padding(
@@ -142,9 +141,9 @@ class _LoginState extends State<Login> {
                                         _onLoading();
                                         try {
                                           final ParseUser user = ParseUser(
-                                              emailController.text,
+                                              usernameController.text,
                                               passwordController.text,
-                                              emailController.text);
+                                              usernameController.text);
                                           final ParseResponse response =
                                               await user.login();
                                           if (response.success) {

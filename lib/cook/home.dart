@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
             const TabItem<dynamic>(icon: Icons.home, title: 'Accueil'),
             const TabItem<dynamic>(icon: Icons.restaurant, title: 'Demande'),
             const TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
-            const TabItem<dynamic>(icon: Icons.people, title: 'Profile'),
+            const TabItem<dynamic>(
+                icon: Icons.account_circle, title: 'Profile'),
           ],
           initialActiveIndex: 0,
           onTap: (int i) {
