@@ -70,193 +70,219 @@ class _SignupState extends State<Signup> {
                 ),
               ),
             )),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 120,
-                    height: 120,
-                  ),
-                  const Text(
-                    'Inscription',
-                    style: TextStyle(
-                      fontFamily: 'Amatic',
-                      fontSize: 40,
-                    ),
-                  ),
-                  SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: Divider(color: Colors.teal.shade100)),
-                  GestureDetector(
-                      onTap: () async {
-                        await getImage();
-                      },
+            CustomScrollView(slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.teal[100 * (index % 9)],
                       child: Container(
-                        child: Center(
-                            child: Container(
-                                child: _image == null
-                                    ? ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(65.0),
-                                        child: Image.asset(
-                                          'assets/images/noAvatar.png',
-                                          fit: BoxFit.cover,
-                                          width: 110,
-                                          height: 110,
+                        margin: const EdgeInsets.only(top: 60.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/images/logo.png',
+                              width: 120,
+                              height: 120,
+                            ),
+                            const Text(
+                              'Inscription',
+                              style: TextStyle(
+                                fontFamily: 'Amatic',
+                                fontSize: 40,
+                              ),
+                            ),
+                            SizedBox(
+                                height: 20,
+                                width: 100,
+                                child: Divider(color: Colors.teal.shade100)),
+                            GestureDetector(
+                                onTap: () async {
+                                  await getImage();
+                                },
+                                child: Container(
+                                  child: Center(
+                                      child: Container(
+                                          child: _image == null
+                                              ? ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          65.0),
+                                                  child: Image.asset(
+                                                    'assets/images/noAvatar.png',
+                                                    fit: BoxFit.cover,
+                                                    width: 110,
+                                                    height: 110,
+                                                  ),
+                                                )
+                                              : Container(
+                                                  width: 110.0,
+                                                  height: 110.0,
+                                                  decoration: new BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          new DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: FileImage(
+                                                                  _image))),
+                                                ))),
+                                )),
+                            Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: TextField(
+                                  controller: emailController,
+                                  decoration: const InputDecoration(
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(40.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 0.0),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(40.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 0.0),
+                                    ),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    prefixIcon: Icon(Icons.email),
+                                    hintText: 'Email',
+                                  ),
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: TextField(
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(40.0),
                                         ),
-                                      )
-                                    : Container(
-                                        width: 110.0,
-                                        height: 110.0,
-                                        decoration: new BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: new DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: FileImage(_image))),
-                                      ))),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: emailController,
-                        decoration: const InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(40.0),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0.0),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(40.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0.0),
+                                      ),
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      prefixIcon: Icon(Icons.lock),
+                                      hintText: 'Mot de passe',
+                                      contentPadding: EdgeInsets.all(20.0))),
                             ),
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0.0),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(40.0),
+                            Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: _handleTap,
+                                        child: Text(
+                                          "Cuisinier",
+                                          style: TextStyle(
+                                              fontFamily: 'Amatic',
+                                              fontSize: 24,
+                                              color: !_cooker
+                                                  ? Colors.black
+                                                  : Colors.orange,
+                                              fontWeight: !_cooker
+                                                  ? FontWeight.w400
+                                                  : FontWeight.w900),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: _handleTap,
+                                        child: Text(
+                                          "Client",
+                                          style: TextStyle(
+                                              fontFamily: 'Amatic',
+                                              fontSize: 24,
+                                              color: !_cooker
+                                                  ? Colors.orange
+                                                  : Colors.black,
+                                              fontWeight: _cooker
+                                                  ? FontWeight.w400
+                                                  : FontWeight.w900),
+                                        ),
+                                      ),
+                                    ])),
+                            const SizedBox(height: 30),
+                            ButtonTheme(
+                              minWidth: 180.0,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side:
+                                        BorderSide(color: Colors.transparent)),
+                                onPressed: _loading
+                                    ? null
+                                    : () async {
+                                        _onLoading();
+                                        try {
+                                          final user = ParseUser(
+                                              emailController.text,
+                                              passwordController.text,
+                                              emailController.text);
+                                          user.set('type',
+                                              _cooker ? 'cook' : 'client');
+                                          if (_image != null) {
+                                            ParseFileBase parseFile =
+                                                ParseFile(File(_image.path));
+
+                                            user.set('img', parseFile);
+                                          }
+
+                                          var response = await user.signUp();
+                                          if (response.success) {
+                                            _offLoading();
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            showAlertDialog(context, 'Erreur',
+                                                'Email ou mot de passe invalide');
+                                            _offLoading();
+                                          }
+                                        } catch (e) {
+                                          _offLoading();
+                                          print(e);
+                                        }
+                                      },
+                                child: const Text("M'inscrire",
+                                    style: TextStyle(fontSize: 20)),
+                                color: Colors.orange,
+                                textColor: Colors.white,
+                              ),
                             ),
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0.0),
-                          ),
-                          fillColor: Colors.white,
-                          filled: true,
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'Email',
+                            _loading
+                                ? LoadingBumpingLine.circle(
+                                    size: 30,
+                                    backgroundColor: Colors.orange,
+                                    duration: Duration(milliseconds: 500),
+                                  )
+                                : const SizedBox(height: 0)
+                          ],
                         ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(40.0),
-                              ),
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0.0),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(40.0),
-                              ),
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0.0),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            prefixIcon: Icon(Icons.lock),
-                            hintText: 'Mot de passe',
-                            contentPadding: EdgeInsets.all(20.0))),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: _handleTap,
-                              child: Text(
-                                "Cuisinier",
-                                style: TextStyle(
-                                    fontFamily: 'Amatic',
-                                    fontSize: 24,
-                                    color:
-                                        !_cooker ? Colors.black : Colors.orange,
-                                    fontWeight: !_cooker
-                                        ? FontWeight.w400
-                                        : FontWeight.w900),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: _handleTap,
-                              child: Text(
-                                "Client",
-                                style: TextStyle(
-                                    fontFamily: 'Amatic',
-                                    fontSize: 24,
-                                    color:
-                                        !_cooker ? Colors.orange : Colors.black,
-                                    fontWeight: _cooker
-                                        ? FontWeight.w400
-                                        : FontWeight.w900),
-                              ),
-                            ),
-                          ])),
-                  const SizedBox(height: 30),
-                  ButtonTheme(
-                    minWidth: 180.0,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.transparent)),
-                      onPressed: _loading
-                          ? null
-                          : () async {
-                              _onLoading();
-                              try {
-                                final user = ParseUser(
-                                    emailController.text,
-                                    passwordController.text,
-                                    emailController.text);
-                                user.set('type', _cooker ? 'cook' : 'client');
-                                if (_image != null) {
-                                  ParseFileBase parseFile =
-                                      ParseFile(File(_image.path));
-
-                                  user.set('img', parseFile);
-                                }
-
-                                var response = await user.signUp();
-                                if (response.success) {
-                                  _offLoading();
-                                  Navigator.of(context).pop();
-                                } else {
-                                  showAlertDialog(context, 'Erreur',
-                                      'Email ou mot de passe invalide');
-                                  _offLoading();
-                                }
-                              } catch (e) {
-                                _offLoading();
-                                print(e);
-                              }
-                            },
-                      child: const Text("M'inscrire",
-                          style: TextStyle(fontSize: 20)),
-                      color: Colors.orange,
-                      textColor: Colors.white,
-                    ),
-                  ),
-                  _loading
-                      ? LoadingBumpingLine.circle(
-                          size: 30,
-                          backgroundColor: Colors.orange,
-                          duration: Duration(milliseconds: 500),
-                        )
-                      : const SizedBox(height: 0)
-                ],
-              ),
-            ),
+                      ),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              )
+            ]),
           ])),
     );
   }

@@ -5,6 +5,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'add.dart';
+import 'book.dart';
+import 'offer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -38,10 +40,10 @@ class _HomeState extends State<Home> {
           builder: (context, dynamic user) {
             switch (_idx) {
               case 0:
-                return Text('Hi 1');
+                return Offer();
                 break;
               case 1:
-                return Text('Hi 2');
+                return Book();
                 break;
               case 2:
                 return Add();
