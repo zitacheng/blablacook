@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
           '/': (BuildContext context) => const Login(),
           '/cookOffer': (BuildContext context) => cookHome.Home(),
         },
-        title: 'Flutter Demo',
+        title: 'blablacook',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
       ),
