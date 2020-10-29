@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:blablacook/cook/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'add.dart';
 import 'book.dart';
 
@@ -15,13 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _idx = 0;
-
-  // var apiResponse = await ParseObject('Picture').getAll();
-  // Future<List<dynamic>> fetchPicture() async {
-  //   var apiResponse = await ParseObject('Picture').getAll();
-  //   inspect(apiResponse);
-  // }
+  int _idx = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -44,26 +35,27 @@ class _HomeState extends State<Home> {
           },
         ),
         body: Center(
-            child: StoreConnector<dynamic, dynamic>(
-          // ignore: always_specify_types
-          converter: (store) => store.state.user,
-          builder: (BuildContext context, dynamic user) {
-            switch (_idx) {
-              case 0:
-                return Book();
-                break;
-              case 1:
-                return Add();
-                break;
-              case 2:
-                return Profile();
-                break;
-              default:
-                {
+          child: StoreConnector<dynamic, dynamic>(
+            // ignore: always_specify_types
+            converter: (store) => store.state.user,
+            builder: (BuildContext context, dynamic user) {
+              switch (_idx) {
+                case 0:
+                  return Book();
+                  break;
+                case 1:
+                  return Add();
+                  break;
+                case 2:
                   return Profile();
-                }
-            }
-          },
-        )));
+                  break;
+                default:
+                  {
+                    return Profile();
+                  }
+              }
+            },
+          ),
+        ));
   }
 }

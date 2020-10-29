@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'actions.dart';
 import 'appstate.dart';
@@ -23,9 +25,11 @@ User _userReducer(User state, dynamic action) {
 }
 
 Picture _picsReducer(Picture state, dynamic action) {
+  print('yyyy');
+  inspect(action.value);
   if (action.key == BlablacookActions.updatePic) {
     return Picture(
-      action.value as List<ParseFile>,
+      action.value as List<ParseObject>,
     );
   }
   return state;

@@ -1,8 +1,11 @@
-import 'package:auto_animated/auto_animated.dart';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+
+import '../actions.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,53 +13,53 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final options = LiveOptions(
-    // Start animation after (default zero)
-    delay: Duration(seconds: 1),
+  Future<ParseResponse> fetchPicture() async {
+    final ParseResponse apiResponse = await ParseObject('Picture').getAll();
+    return apiResponse;
+  }
 
-    // Show each item through (default 250)
-    showItemInterval: Duration(milliseconds: 500),
-
-    // Animation duration (default 250)
-    showItemDuration: Duration(seconds: 1),
-
-    // Animations starts at 0.05 visible
-    // item fraction in sight (default 0.025)
-    visibleFraction: 0.05,
-
-    // Repeat the animation of the appearance
-    // when scrolling in the opposite direction (default false)
-    // To get the effect as in a showcase for ListView, set true
-    reAnimateOnVisibility: false,
-  );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: Center(
-        child: StoreConnector<dynamic, dynamic>(
-          // ignore: always_specify_types
-          converter: (store) => store.state.user,
-          builder: (BuildContext context, dynamic user) {
-            return CustomScrollView(slivers: <Widget>[
-              SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    child: Column(
-                      children: <Widget>[
+    return StoreConnector<dynamic, Function(dynamic)>(onInit: (store) async {
+      final ParseResponse res = await fetchPicture();
+      print('mmnnnn');
+      inspect(res);
+      return store.dispatch(MyAction(BlablacookActions.updatePic, res.results));
+    },
+        // ignore: always_specify_types
+        converter: (store) {
+      // Return a `VoidCallback`, which is a fancy name for a function
+      // with no parameters. It only dispatches an Increment action.
+      return (dynamic pic) {
+        return store.dispatch(MyAction(BlablacookActions.updatePic, pic));
+      };
+      // ignore: always_specify_types
+    }, builder: (BuildContext context, callback) {
+      return Scaffold(
+          body: SafeArea(
+        child: Center(
+          child: StoreConnector<dynamic, dynamic>(
+            // ignore: always_specify_types
+            converter: (store) => store.state,
+            builder: (BuildContext context, dynamic state) {
+              return CustomScrollView(slivers: <Widget>[
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      child: Column(children: <Widget>[
                         const SizedBox(height: 30),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(60.0),
                           child: Image.network(
-                            user.img.url as String,
+                            state.user.img.url as String,
                             fit: BoxFit.cover,
                             width: 120,
                             height: 120,
                           ),
                         ),
                         Text(
-                          user.username as String,
+                          state.user.username as String,
                           style: const TextStyle(
                             fontFamily: 'Amatic',
                             fontSize: 40,
@@ -65,7 +68,7 @@ class _ProfileState extends State<Profile> {
                         SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(children: <Widget>[
-                              for (dynamic val in user.cookType)
+                              for (dynamic val in state.user.cookType)
                                 Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: Chip(
@@ -90,16 +93,26 @@ class _ProfileState extends State<Profile> {
                                     fontSize: 20, fontFamily: 'LatoLight')),
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-                childCount: 1,
-              ))
-            ]);
-          },
+                        Container(
+                            child: ClipRRect(
+                          borderRadius: BorderRadius.circular(60.0),
+                          child: Image.network(
+                            state.pics.data[0].get('img').url as String,
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
+                          ),
+                        ))
+                      ]),
+                    );
+                  },
+                  childCount: 1,
+                ))
+              ]);
+            },
+          ),
         ),
-      ),
-    ));
+      ));
+    });
   }
 }

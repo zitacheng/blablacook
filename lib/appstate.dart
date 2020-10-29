@@ -16,10 +16,10 @@ class User {
 
 class Picture {
   // ignore: avoid_init_to_null
-  List<ParseFile> pics = null;
+  List<ParseObject> data = null;
 
   // ignore: sort_constructors_first
-  Picture(this.pics);
+  Picture(this.data);
 }
 
 @immutable
