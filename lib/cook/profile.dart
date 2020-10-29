@@ -1,8 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 import '../actions.dart';
 
@@ -12,45 +12,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Future<ParseResponse> fetchPicture() async {
-    final ParseResponse apiResponse = await ParseObject('Picture').getAll();
+  Future<ParseResponse> fetchPicture(String id) async {
+    final QueryBuilder<ParseObject> queryPost =
+        QueryBuilder<ParseObject>(ParseObject('Picture'))
+          ..whereEqualTo('userId', id);
+
+    final ParseResponse apiResponse = await queryPost.query();
     return apiResponse;
   }
-
-  final List<String> titles = [
-    "RED",
-    "YELLOW",
-    "BLACK",
-    "CYAN",
-    "BLUE",
-    "GREY",
-  ];
-
-  final List<Widget> images = [
-    Container(
-      color: Colors.red,
-    ),
-    Container(
-      color: Colors.yellow,
-    ),
-    Container(
-      color: Colors.black,
-    ),
-    Container(
-      color: Colors.cyan,
-    ),
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.grey,
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<dynamic, Function(dynamic)>(onInit: (store) async {
-      final ParseResponse res = await fetchPicture();
+      final ParseResponse res = await fetchPicture('Pm6hezt23K');
       return store.dispatch(MyAction(BlablacookActions.updatePic, res.results));
     },
         // ignore: always_specify_types
@@ -110,34 +84,35 @@ class _ProfileState extends State<Profile> {
                     margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                     child: const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Plat cuisinés',
+                      child: Text('Plats cuisinés',
                           style:
                               TextStyle(fontSize: 20, fontFamily: 'LatoLight')),
                     ),
                   ),
-                  Expanded(
-                    child: GridView.count(
-                        primary: false,
-                        padding: const EdgeInsets.all(10),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 2,
-                        children: <Widget>[
-                          for (dynamic val in state.pics.data)
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.network(
-                                  val.get('img').url as String,
-                                  fit: BoxFit.cover,
-                                  width: 120,
-                                  height: 120,
+                  if (state.pics != null && state.pics.data != null)
+                    Expanded(
+                      child: GridView.count(
+                          primary: false,
+                          padding: const EdgeInsets.all(10),
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 2,
+                          children: <Widget>[
+                            for (dynamic val in state.pics.data)
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Image.network(
+                                    val.get('img').url as String,
+                                    fit: BoxFit.cover,
+                                    width: 120,
+                                    height: 120,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ]),
-                  ),
+                          ]),
+                    ),
                 ]),
               );
             },
