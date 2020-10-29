@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:blablacook/login.dart';
+import 'package:flutter/services.dart';
 // ignore: library_prefixes
 import 'package:blablacook/cook/home.dart' as cookHome;
 import 'login.dart';
@@ -29,6 +30,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.white,
+    ));
+
     return StoreProvider<dynamic>(
       store: store,
       child: MaterialApp(

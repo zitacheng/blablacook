@@ -10,20 +10,26 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-            child: StoreConnector<dynamic, dynamic>(
-      // ignore: always_specify_types
-      converter: (store) => store.state.user,
-      builder: (BuildContext context, dynamic user) {
-        return SafeArea(
-          child: Column(
-            children: const <Widget>[
-              Text('add page'),
-            ],
-          ),
-        );
-      },
-    )));
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.grey[200],
+            body: Center(
+                child: StoreConnector<dynamic, dynamic>(
+              // ignore: always_specify_types
+              converter: (store) => store.state.user,
+              builder: (BuildContext context, dynamic user) {
+                return SafeArea(
+                  child: Column(
+                    children: const <Widget>[
+                      Text('add page'),
+                    ],
+                  ),
+                );
+              },
+            ))),
+      ),
+    );
   }
 }
