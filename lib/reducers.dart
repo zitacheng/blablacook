@@ -18,10 +18,11 @@ User _userReducer(User state, dynamic action) {
       action.value.get('img') as ParseFile,
       action.value.get('username') as String,
       action.value.objectId as String,
+      action.value.get('rate') as double,
     );
   }
   if (action.key == BlablacookActions.CleareUser) {
-    return User('', '', '', null, null, '', '');
+    return User('', '', '', null, null, '', '', 0);
   }
   return state;
 }

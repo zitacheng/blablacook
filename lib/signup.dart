@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:blablacook/utils.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 
@@ -20,7 +19,6 @@ class _SignupState extends State<Signup> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
-  final ImagePicker picker = ImagePicker();
   bool _cooker = false;
   File _image;
   bool _loading = false;
@@ -30,20 +28,6 @@ class _SignupState extends State<Signup> {
   final List<String> _typeCookFirst = typeCook.sublist(0, _half.toInt());
   final List<String> _typeCookSec =
       typeCook.sublist(_half.toInt(), typeCook.length);
-
-  // ignore: always_specify_types
-  Future getImage() async {
-    final PickedFile pickedFile =
-        await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   void _onLoading() {
     setState(() {
@@ -115,7 +99,8 @@ class _SignupState extends State<Signup> {
                                   child: Divider(color: Colors.teal.shade100)),
                               GestureDetector(
                                   onTap: () async {
-                                    await getImage();
+                                    _image = await getImage() as File;
+                                    setState(() {});
                                   },
                                   child: Container(
                                     child: Center(

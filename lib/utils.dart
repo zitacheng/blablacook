@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 dynamic showAlertDialog(BuildContext context, String title, String message) {
   // set up the button
@@ -26,4 +29,12 @@ dynamic showAlertDialog(BuildContext context, String title, String message) {
       return alert;
     },
   );
+}
+
+// ignore: always_specify_types
+Future getImage() async {
+  final ImagePicker picker = ImagePicker();
+  final dynamic pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+  return File(pickedFile.path as String);
 }

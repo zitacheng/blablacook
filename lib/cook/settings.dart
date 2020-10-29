@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-
 import '../utils.dart';
+import 'editProfile.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -23,6 +21,8 @@ class _SettingsState extends State<Settings> {
       builder: (BuildContext context, dynamic user) {
         return SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // ignore: unnecessary_const
               Image.asset(
@@ -35,6 +35,34 @@ class _SettingsState extends State<Settings> {
                 style: TextStyle(
                   fontFamily: 'Amatic',
                   fontSize: 40,
+                ),
+              ),
+              SizedBox(
+                  height: 20,
+                  width: 100,
+                  child: Divider(color: Colors.teal.shade100)),
+              ButtonTheme(
+                minWidth: 180.0,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(color: Colors.transparent)),
+                  onPressed: () {
+                    showModalBottomSheet<Container>(
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return FractionallySizedBox(
+                            heightFactor: 0.8,
+                            child: EditProfile(),
+                          );
+                        });
+                  },
+                  child: const Text('Modifier le profil',
+                      style: TextStyle(fontSize: 20)),
+                  color: Colors.orange,
+                  textColor: Colors.white,
                 ),
               ),
               ButtonTheme(
@@ -58,7 +86,7 @@ class _SettingsState extends State<Settings> {
                   color: Colors.orange,
                   textColor: Colors.white,
                 ),
-              )
+              ),
             ],
           ),
         );

@@ -81,7 +81,7 @@ class _ProfileState extends State<Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 5.0),
                                     child: RatingBarIndicator(
-                                      rating: 3,
+                                      rating: state.user.rate as double,
                                       direction: Axis.horizontal,
                                       itemCount: 5,
                                       itemSize: 20.0,
@@ -159,7 +159,17 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                             ]),
-                      ),
+                      )
+                    else
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                            "Oups, le/la cuisinier n'a publié aucun plat pour le moment",
+                            style: TextStyle(
+                                fontFamily: 'LatoLight',
+                                fontSize: 16,
+                                color: Colors.black)),
+                      )
                   ]),
                 );
               },
