@@ -1,4 +1,5 @@
 import 'package:blablacook/cook/profile.dart';
+import 'package:blablacook/cook/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
                   return Profile();
                   break;
                 case 3:
-                  return Add();
+                  return Settings();
                   break;
                 default:
                   {

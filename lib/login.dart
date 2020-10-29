@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:blablacook/signup.dart';
 import 'package:blablacook/utils.dart';
 import 'package:flutter/material.dart';

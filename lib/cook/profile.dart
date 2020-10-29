@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -24,15 +23,16 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<dynamic, Function(dynamic)>(onInit: (store) async {
-      final ParseResponse res = await fetchPicture('Pm6hezt23K');
-      return store.dispatch(MyAction(BlablacookActions.updatePic, res.results));
+      final ParseResponse res =
+          await fetchPicture(store.state.user.id as String);
+      return store.dispatch(MyAction(BlablacookActions.UpdatePic, res.results));
     },
         // ignore: always_specify_types
         converter: (store) {
       // Return a `VoidCallback`, which is a fancy name for a function
       // with no parameters. It only dispatches an Increment action.
       return (dynamic pic) {
-        return store.dispatch(MyAction(BlablacookActions.updatePic, pic));
+        return store.dispatch(MyAction(BlablacookActions.UpdatePic, pic));
       };
       // ignore: always_specify_types
     }, builder: (BuildContext context, callback) {

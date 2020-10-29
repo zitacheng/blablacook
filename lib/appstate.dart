@@ -6,12 +6,14 @@ class User {
   String type = '';
   String bio = '';
   String username = '';
+  String id = '';
   // ignore: avoid_init_to_null
   List<dynamic> cookType = null;
   // ignore: avoid_init_to_null
   ParseFile img = null;
   // ignore: sort_constructors_first
-  User(this.email, this.type, this.bio, this.cookType, this.img, this.username);
+  User(this.email, this.type, this.bio, this.cookType, this.img, this.username,
+      this.id);
 }
 
 class Picture {

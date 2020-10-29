@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'actions.dart';
 import 'appstate.dart';
@@ -19,15 +17,24 @@ User _userReducer(User state, dynamic action) {
       action.value.get('cookType') as List<dynamic>,
       action.value.get('img') as ParseFile,
       action.value.get('username') as String,
+      action.value.objectId as String,
     );
+  }
+  if (action.key == BlablacookActions.CleareUser) {
+    return User('', '', '', null, null, '', '');
   }
   return state;
 }
 
 Picture _picsReducer(Picture state, dynamic action) {
-  if (action.key == BlablacookActions.updatePic) {
+  if (action.key == BlablacookActions.UpdatePic) {
     return Picture(
       action.value as List<ParseObject>,
+    );
+  }
+  if (action.key == BlablacookActions.ClearPic) {
+    return Picture(
+      null,
     );
   }
   return state;
