@@ -25,8 +25,6 @@ User _userReducer(User state, dynamic action) {
 }
 
 Picture _picsReducer(Picture state, dynamic action) {
-  print('yyyy');
-  inspect(action.value);
   if (action.key == BlablacookActions.updatePic) {
     return Picture(
       action.value as List<ParseObject>,

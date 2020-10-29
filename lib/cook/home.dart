@@ -21,11 +21,12 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.orange,
           // ignore: always_specify_types
           // ignore: prefer_const_literals_to_create_immutables
-          items: <TabItem>[
+          items: <TabItem<dynamic>>[
             const TabItem<dynamic>(icon: Icons.restaurant, title: 'Demande'),
             const TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
             const TabItem<dynamic>(
                 icon: Icons.account_circle, title: 'Profile'),
+            const TabItem<dynamic>(icon: Icons.settings, title: 'Gestion'),
           ],
           initialActiveIndex: 2,
           onTap: (int i) {
@@ -48,6 +49,9 @@ class _HomeState extends State<Home> {
                   break;
                 case 2:
                   return Profile();
+                  break;
+                case 3:
+                  return Add();
                   break;
                 default:
                   {
