@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -23,7 +21,6 @@ class _ProfileState extends State<Profile> {
     return StoreConnector<dynamic, Function(dynamic)>(onInit: (store) async {
       final ParseResponse res = await fetchPicture();
       print('mmnnnn');
-      inspect(res);
       return store.dispatch(MyAction(BlablacookActions.updatePic, res.results));
     },
         // ignore: always_specify_types
