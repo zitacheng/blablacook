@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
@@ -46,20 +47,64 @@ class _ProfileState extends State<Profile> {
               return Container(
                 child: Column(children: <Widget>[
                   const SizedBox(height: 30),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(60.0),
-                    child: Image.network(
-                      state.user.img.url as String,
-                      fit: BoxFit.cover,
-                      width: 120,
-                      height: 120,
-                    ),
-                  ),
-                  Text(
-                    state.user.username as String,
-                    style: const TextStyle(
-                      fontFamily: 'Amatic',
-                      fontSize: 40,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // ignore: always_specify_types
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(60.0),
+                          child: Image.network(
+                            state.user.img.url as String,
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 14.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              // ignore: always_specify_types
+                              children: [
+                                Text(
+                                  state.user.username as String,
+                                  style: const TextStyle(
+                                    fontFamily: 'Amatic',
+                                    fontSize: 40,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  child: RatingBarIndicator(
+                                    rating: 3,
+                                    direction: Axis.horizontal,
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    itemBuilder: (BuildContext context, _) =>
+                                        const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  state.user.bio as String,
+                                  maxLines: 3,
+                                  style: const TextStyle(
+                                      fontFamily: 'LatoLight',
+                                      fontSize: 15,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SingleChildScrollView(
