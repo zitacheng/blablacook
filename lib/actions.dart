@@ -1,4 +1,4 @@
-enum BlablacookActions { UpdateUser }
+enum BlablacookActions { UpdateUser, updatePic }
 
 class MyAction {
   BlablacookActions key;
