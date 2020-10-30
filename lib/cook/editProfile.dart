@@ -124,7 +124,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 GestureDetector(
                     onTap: () async {
-                      _image = await getImage() as File;
+                      _image = await getImage(2) as File;
                       setState(() {
                         _avatar = Container(
                           width: 110.0,

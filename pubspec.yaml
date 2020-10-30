@@ -48,7 +48,7 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/noAvatar.png
-    - assets/images/picture.png
+    - assets/images/plate.png
 
   fonts:
     - family: LatoThin

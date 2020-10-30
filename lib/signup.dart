@@ -99,7 +99,7 @@ class _SignupState extends State<Signup> {
                                   child: Divider(color: Colors.teal.shade100)),
                               GestureDetector(
                                   onTap: () async {
-                                    _image = await getImage() as File;
+                                    _image = await getImage(2) as File;
                                     setState(() {});
                                   },
                                   child: Container(
