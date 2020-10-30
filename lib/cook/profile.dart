@@ -12,6 +12,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final Widget _avatar = ClipRRect(
+    borderRadius: BorderRadius.circular(65.0),
+    child: Image.asset(
+      'assets/images/noAvatar.png',
+      fit: BoxFit.cover,
+      width: 110,
+      height: 110,
+    ),
+  );
   Future<ParseResponse> fetchPicture(String id) async {
     final QueryBuilder<ParseObject> queryPost =
         QueryBuilder<ParseObject>(ParseObject('Picture'))
@@ -55,15 +64,18 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // ignore: always_specify_types
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(60.0),
-                            child: Image.network(
-                              state.user.img.url as String,
-                              fit: BoxFit.cover,
-                              width: 120,
-                              height: 120,
-                            ),
-                          ),
+                          if (state.user.img != null)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(60.0),
+                              child: Image.network(
+                                state.user.img.url as String,
+                                fit: BoxFit.cover,
+                                width: 120,
+                                height: 120,
+                              ),
+                            )
+                          else
+                            _avatar,
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 14.0),

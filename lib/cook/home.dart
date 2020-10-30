@@ -17,6 +17,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print('home');
+
     return Container(
       color: Colors.black,
       child: SafeArea(
