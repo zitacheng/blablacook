@@ -5,7 +5,8 @@ import 'appstate.dart';
 AppState appReducer(AppState state, dynamic action) {
   return AppState(
       user: _userReducer(state.user, action),
-      pics: _picsReducer(state.pics, action));
+      pics: _picsReducer(state.pics, action),
+      book: _bookReducer(state.book, action));
 }
 
 User _userReducer(User state, dynamic action) {
@@ -35,6 +36,20 @@ Picture _picsReducer(Picture state, dynamic action) {
   }
   if (action.key == BlablacookActions.ClearPic) {
     return Picture(
+      null,
+    );
+  }
+  return state;
+}
+
+Book _bookReducer(Book state, dynamic action) {
+  if (action.key == BlablacookActions.UpdatePic) {
+    return Book(
+      action.value as List<ParseObject>,
+    );
+  }
+  if (action.key == BlablacookActions.ClearPic) {
+    return Book(
       null,
     );
   }

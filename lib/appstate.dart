@@ -25,11 +25,20 @@ class Picture {
   Picture(this.data);
 }
 
+class Book {
+  // ignore: avoid_init_to_null
+  List<ParseObject> data = null;
+
+  // ignore: sort_constructors_first
+  Book(this.data);
+}
+
 @immutable
 class AppState {
   final User user;
   final Picture pics;
+  final Book book;
 
   // ignore: sort_constructors_first
-  const AppState({this.user, this.pics});
+  const AppState({this.user, this.pics, this.book});
 }
