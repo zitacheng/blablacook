@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:loading_animations/loading_animations.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import '../utils.dart';
 
@@ -15,7 +17,35 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   File _image;
+  bool _loading = false;
   final TextEditingController aboutController = TextEditingController();
+
+  Future<ParseResponse> uploadPicture(
+      String id, String name, ParseFile parseFile) async {
+    final ParseObject query = ParseObject('Picture')
+      ..set('name', name)
+      ..set('img', parseFile)
+      ..set('userId', id);
+    final ParseResponse apiResponse = await query.save();
+    _offLoading();
+
+    // final ParseResponse apiResponse = await queryPost.query();
+    return apiResponse;
+  }
+
+  void _onLoading() {
+    setState(() {
+      _loading = true;
+    });
+  }
+
+  void _offLoading() {
+    _image = null;
+    aboutController.text = '';
+    setState(() {
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,14 +182,47 @@ class _AddState extends State<Add> {
                                     borderRadius: BorderRadius.circular(18.0),
                                     side: const BorderSide(
                                         color: Colors.transparent)),
-                                onPressed: () {},
+                                onPressed: _loading
+                                    ? null
+                                    : () async {
+                                        _onLoading();
+                                        if (_image != null) {
+                                          final ParseResponse fileResponse =
+                                              await ParseFile(_image,
+                                                      debug: true)
+                                                  .save();
+                                          if (fileResponse.success) {
+                                            final ParseFile parseFile =
+                                                fileResponse.result
+                                                    as ParseFile;
+                                            uploadPicture(
+                                                user.id as String,
+                                                aboutController.text,
+                                                parseFile);
+                                          } else {
+                                            _offLoading();
+                                            showAlertDialog(context, 'Erreur',
+                                                "Erreur de sauvegarde d'image");
+                                          }
+                                        } else {
+                                          _offLoading();
+                                          showAlertDialog(context, 'Erreur',
+                                              'Veuillez choisir une image');
+                                        }
+                                      },
                                 child: const Text('Ajouter',
                                     style: TextStyle(fontSize: 20)),
                                 color: Colors.orange,
                                 textColor: Colors.white,
                               ),
                             ),
-                          )
+                          ),
+                          if (_loading)
+                            LoadingBumpingLine.circle(
+                              size: 30,
+                              backgroundColor: Colors.orange,
+                              duration: const Duration(milliseconds: 500),
+                            ),
                         ],
                       ),
                     );
