@@ -94,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
           ],
         ),
         child: StoreConnector<dynamic, dynamic>(
-            onInit: (store) async {
+            onInit: (dynamic store) async {
               initTextFielf(store.state.user);
             },
             // ignore: always_specify_types

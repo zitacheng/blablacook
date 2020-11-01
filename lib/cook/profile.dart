@@ -32,7 +32,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<dynamic, Function(dynamic)>(onInit: (store) async {
+    return StoreConnector<dynamic, Function(dynamic)>(
+        // ignore: void_checks
+        onInit: (dynamic store) async {
       final ParseResponse res =
           await fetchPicture(store.state.user.id as String);
       return store.dispatch(MyAction(BlablacookActions.UpdatePic, res.results));
@@ -42,8 +44,7 @@ class _ProfileState extends State<Profile> {
       return (dynamic pic) {
         return store.dispatch(MyAction(BlablacookActions.UpdatePic, pic));
       };
-      // ignore: always_specify_types
-    }, builder: (BuildContext context, callback) {
+    }, builder: (BuildContext context, dynamic callback) {
       return Container(
         color: Colors.grey[200],
         child: SafeArea(

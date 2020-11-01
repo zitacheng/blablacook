@@ -16,25 +16,23 @@ class _BookState extends State<Book> {
     final dynamic currentUser = await ParseUser.currentUser();
     final QueryBuilder<ParseObject> queryPost =
         QueryBuilder<ParseObject>(ParseObject('Book'))
-          ..includeObject(['client', 'cook'])
-          ..whereEqualTo('cook', currentUser);
+          ..includeObject(<String>['client', 'cook'])
+          ..whereEqualTo('cook', currentUser)
+          ..whereEqualTo('accepted', null);
     final ParseResponse apiResponse = await queryPost.query();
     return apiResponse;
   }
 
-  // ignore: always_specify_types
   @override
   Widget build(BuildContext context) {
     return StoreConnector<dynamic, dynamic>(
         // ignore: void_checks
-        onInit: (store) async {
+        onInit: (dynamic store) async {
           final ParseResponse res = await fetchBooking();
           return store
               .dispatch(MyAction(BlablacookActions.UpdateBook, res.results));
         },
-        // ignore: always_specify_types
-        converter: (store) => store.state,
-        // ignore: always_specify_types
+        converter: (dynamic store) => store.state,
         builder: (BuildContext context, dynamic state) {
           return SafeArea(
             child: Scaffold(
@@ -48,7 +46,7 @@ class _BookState extends State<Book> {
                       fontSize: 40,
                     )),
               ),
-              for (var data in state.book.data)
+              for (dynamic data in state.book.data)
                 Slidable(
                   actionPane: const SlidableDrawerActionPane(),
                   actionExtentRatio: 0.25,
