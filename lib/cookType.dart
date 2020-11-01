@@ -1,5 +1,4 @@
-// ignore: always_specify_types
-final List<String> typeCook = [
+final List<String> typeCook = <String>[
   'chinoise',
   'italienne',
   'viet',

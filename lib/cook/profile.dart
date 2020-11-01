@@ -38,9 +38,7 @@ class _ProfileState extends State<Profile> {
       final ParseResponse res =
           await fetchPicture(store.state.user.id as String);
       return store.dispatch(MyAction(BlablacookActions.UpdatePic, res.results));
-    },
-        // ignore: always_specify_types
-        converter: (store) {
+    }, converter: (dynamic store) {
       return (dynamic pic) {
         return store.dispatch(MyAction(BlablacookActions.UpdatePic, pic));
       };
@@ -51,8 +49,7 @@ class _ProfileState extends State<Profile> {
           child: Scaffold(
               body: Center(
             child: StoreConnector<dynamic, dynamic>(
-              // ignore: always_specify_types
-              converter: (store) => store.state,
+              converter: (dynamic store) => store.state,
               builder: (BuildContext context, dynamic state) {
                 return Container(
                   child: Column(children: <Widget>[
@@ -61,8 +58,7 @@ class _ProfileState extends State<Profile> {
                       padding: const EdgeInsets.only(left: 18.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        // ignore: always_specify_types
-                        children: [
+                        children: <Widget>[
                           if (state.user.img != null)
                             ClipRRect(
                               borderRadius: BorderRadius.circular(60.0),
@@ -80,8 +76,7 @@ class _ProfileState extends State<Profile> {
                               padding: const EdgeInsets.only(left: 14.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                // ignore: always_specify_types
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     state.user.username as String,
                                     style: const TextStyle(

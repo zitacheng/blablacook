@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
   // ignore: sort_constructors_first
   const MyApp({Key key, this.store}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(

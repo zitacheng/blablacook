@@ -97,8 +97,7 @@ class _EditProfileState extends State<EditProfile> {
             onInit: (dynamic store) async {
               initTextFielf(store.state.user);
             },
-            // ignore: always_specify_types
-            converter: (store) => store.state.user,
+            converter: (dynamic store) => store.state.user,
             builder: (BuildContext context, dynamic user) {
               return Scaffold(
                   body: ListView(children: <Widget>[
@@ -224,8 +223,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 if (user.type == 'cook')
                   Column(
-                    // ignore: always_specify_types
-                    children: [
+                    children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
                         child: Align(
@@ -242,8 +240,7 @@ class _EditProfileState extends State<EditProfile> {
                       Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          // ignore: always_specify_types
-                          children: [
+                          children: <Widget>[
                             Expanded(
                               flex: 5,
                               child: CheckboxGroup(
@@ -315,16 +312,12 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 const SizedBox(height: 30),
                 StoreConnector<dynamic, Function(dynamic)>(
-                    // ignore: always_specify_types
-                    converter: (store) {
-                  // Return a `VoidCallback`, which is a fancy name for a function
-                  // with no parameters. It only dispatches an Increment action.
+                    converter: (dynamic store) {
                   return (dynamic user) {
                     return store
                         .dispatch(MyAction(BlablacookActions.UpdateUser, user));
                   };
-                  // ignore: always_specify_types
-                }, builder: (BuildContext context, callback) {
+                }, builder: (BuildContext context, dynamic callback) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 20.0, left: 20.0),
                     child: ButtonTheme(

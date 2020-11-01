@@ -29,7 +29,6 @@ class _AddState extends State<Add> {
     final ParseResponse apiResponse = await query.save();
     _offLoading();
 
-    // final ParseResponse apiResponse = await queryPost.query();
     return apiResponse;
   }
 
@@ -56,8 +55,7 @@ class _AddState extends State<Add> {
             backgroundColor: Colors.grey[200],
             body: Center(
                 child: StoreConnector<dynamic, dynamic>(
-              // ignore: always_specify_types
-              converter: (store) => store.state.user,
+              converter: (dynamic store) => store.state.user,
               builder: (BuildContext context, dynamic user) {
                 return CustomScrollView(slivers: <Widget>[
                   SliverList(

@@ -116,16 +116,12 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 30),
                           StoreConnector<dynamic, Function(dynamic)>(
-                              // ignore: always_specify_types
-                              converter: (store) {
-                            // Return a `VoidCallback`, which is a fancy name for a function
-                            // with no parameters. It only dispatches an Increment action.
+                              converter: (dynamic store) {
                             return (dynamic user) {
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
                             };
-                            // ignore: always_specify_types
-                          }, builder: (BuildContext context, callback) {
+                          }, builder: (BuildContext context, dynamic callback) {
                             return ButtonTheme(
                               minWidth: 180.0,
                               child: RaisedButton(

@@ -25,16 +25,12 @@ class _HomeState extends State<Home> {
             child: Scaffold(
                 bottomNavigationBar: ConvexAppBar(
                   backgroundColor: Colors.orange,
-                  // ignore: always_specify_types
-                  // ignore: prefer_const_literals_to_create_immutables
-                  items: <TabItem<dynamic>>[
-                    const TabItem<dynamic>(
-                        icon: Icons.restaurant, title: 'Demande'),
-                    const TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
-                    const TabItem<dynamic>(
+                  items: const <TabItem<dynamic>>[
+                    TabItem<dynamic>(icon: Icons.restaurant, title: 'Demande'),
+                    TabItem<dynamic>(icon: Icons.add, title: 'Ajouter'),
+                    TabItem<dynamic>(
                         icon: Icons.account_circle, title: 'Profile'),
-                    const TabItem<dynamic>(
-                        icon: Icons.settings, title: 'Gestion'),
+                    TabItem<dynamic>(icon: Icons.settings, title: 'Gestion'),
                   ],
                   initialActiveIndex: 2,
                   onTap: (int i) {
@@ -45,8 +41,7 @@ class _HomeState extends State<Home> {
                 ),
                 body: Center(
                   child: StoreConnector<dynamic, dynamic>(
-                    // ignore: always_specify_types
-                    converter: (store) => store.state.user,
+                    converter: (dynamic store) => store.state.user,
                     builder: (BuildContext context, dynamic user) {
                       switch (_idx) {
                         case 0:

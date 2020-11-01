@@ -16,15 +16,13 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
         body: Center(
             child: StoreConnector<dynamic, dynamic>(
-      // ignore: always_specify_types
-      converter: (store) => store.state.user,
+      converter: (dynamic store) => store.state.user,
       builder: (BuildContext context, dynamic user) {
         return SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // ignore: unnecessary_const
               Image.asset(
                 'assets/images/logo.png',
                 width: 170,

@@ -22,8 +22,7 @@ class _SignupState extends State<Signup> {
   bool _cooker = false;
   File _image;
   bool _loading = false;
-  // ignore: always_specify_types
-  List<String> _selectedType = [];
+  List<String> _selectedType = <String>[];
   static final double _half = typeCook.length / 2;
   final List<String> _typeCookFirst = typeCook.sublist(0, _half.toInt());
   final List<String> _typeCookSec =
@@ -205,8 +204,7 @@ class _SignupState extends State<Signup> {
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
-                                      // ignore: always_specify_types
-                                      children: [
+                                      children: <Widget>[
                                         GestureDetector(
                                           onTap: _handleTap,
                                           child: Text(
@@ -241,8 +239,7 @@ class _SignupState extends State<Signup> {
                                 ),
                                 if (_cooker)
                                   Column(
-                                    // ignore: always_specify_types
-                                    children: [
+                                    children: <Widget>[
                                       const Padding(
                                         padding:
                                             EdgeInsets.fromLTRB(25, 10, 0, 5),
@@ -262,8 +259,7 @@ class _SignupState extends State<Signup> {
                                               CrossAxisAlignment.start,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          // ignore: always_specify_types
-                                          children: [
+                                          children: <Widget>[
                                             Expanded(
                                               flex: 5,
                                               child: CheckboxGroup(
