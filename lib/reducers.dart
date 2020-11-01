@@ -43,7 +43,7 @@ Picture _picsReducer(Picture state, dynamic action) {
 }
 
 Book _bookReducer(Book state, dynamic action) {
-  if (action.key == BlablacookActions.UpdatePic) {
+  if (action.key == BlablacookActions.UpdateBook) {
     return Book(
       action.value as List<ParseObject>,
     );

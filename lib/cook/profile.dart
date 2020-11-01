@@ -39,8 +39,6 @@ class _ProfileState extends State<Profile> {
     },
         // ignore: always_specify_types
         converter: (store) {
-      // Return a `VoidCallback`, which is a fancy name for a function
-      // with no parameters. It only dispatches an Increment action.
       return (dynamic pic) {
         return store.dispatch(MyAction(BlablacookActions.UpdatePic, pic));
       };
