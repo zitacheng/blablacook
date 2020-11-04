@@ -341,48 +341,43 @@ class _EditProfileState extends State<EditProfile> {
                                     passwordController.text,
                                     bioController.text,
                                     cooker,
-                                    _selectedType))
-                                  try {
-                                    final dynamic parseUser =
-                                        await ParseUser.currentUser();
-                                    parseUser.set('cookType', _selectedType);
-                                    parseUser.set('bio', bioController.text);
+                                    _selectedType)) {
+                                  final dynamic parseUser =
+                                      await ParseUser.currentUser();
+                                  parseUser.set('cookType', _selectedType);
+                                  parseUser.set('bio', bioController.text);
+                                  parseUser.set(
+                                      'username', usernameController.text);
+                                  if (_tapped == true)
                                     parseUser.set(
-                                        'username', usernameController.text);
-                                    if (_tapped == true)
-                                      parseUser.set(
-                                          'password', passwordController.text);
-                                    if (_image != null) {
-                                      final ParseResponse fileResponse =
-                                          await ParseFile(_image, debug: true)
-                                              .save();
-                                      if (fileResponse.success) {
-                                        final ParseFile parseFile =
-                                            fileResponse.result as ParseFile;
-                                        parseUser.set('img', parseFile);
-                                      } else {
-                                        _offLoading();
-                                        showAlertDialog(context, 'Erreur',
-                                            "Erreur de sauvegarde d'image");
-                                      }
-                                    }
-                                    final dynamic response =
-                                        await parseUser.save();
-                                    if (response.success == true) {
-                                      callback(response.result);
-                                      showAlertDialog(context, 'Réussi',
-                                          'Sauvegarde prise en compte');
-                                      _offLoading();
+                                        'password', passwordController.text);
+                                  if (_image != null) {
+                                    final ParseResponse fileResponse =
+                                        await ParseFile(_image, debug: true)
+                                            .save();
+                                    if (fileResponse.success) {
+                                      final ParseFile parseFile =
+                                          fileResponse.result as ParseFile;
+                                      parseUser.set('img', parseFile);
                                     } else {
-                                      showAlertDialog(context, 'Erreur',
-                                          'Sauvegarde non prise en compte');
                                       _offLoading();
+                                      showAlertDialog(context, 'Erreur',
+                                          "Erreur de sauvegarde d'image");
                                     }
-                                  } catch (e) {
-                                    _offLoading();
-                                    print(e);
                                   }
-                                else
+                                  final dynamic response =
+                                      await parseUser.save();
+                                  if (response.success == true) {
+                                    callback(response.result);
+                                    showAlertDialog(context, 'Réussi',
+                                        'Sauvegarde prise en compte');
+                                    _offLoading();
+                                  } else {
+                                    showAlertDialog(context, 'Erreur',
+                                        'Sauvegarde non prise en compte');
+                                    _offLoading();
+                                  }
+                                } else
                                   _offLoading();
                               },
                         child: const Text('Sauvegarder',

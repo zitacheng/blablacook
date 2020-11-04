@@ -1,5 +1,6 @@
 import 'package:blablacook/signup.dart';
 import 'package:blablacook/utils.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:loading_animations/loading_animations.dart';
@@ -17,6 +18,7 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   bool _loading = false;
+  ConnectivityResult _connectivityResult;
 
   void _onLoading() {
     setState(() {
@@ -116,7 +118,11 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 30),
                           StoreConnector<dynamic, Function(dynamic)>(
-                              converter: (dynamic store) {
+                              onInit: (dynamic store) async {
+                            // ignore: unnecessary_parenthesis
+                            _connectivityResult =
+                                await (Connectivity().checkConnectivity());
+                          }, converter: (dynamic store) {
                             return (dynamic user) {
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
@@ -132,33 +138,44 @@ class _LoginState extends State<Login> {
                                 onPressed: _loading
                                     ? null
                                     : () async {
+                                        if (usernameController.text.isEmpty ||
+                                            passwordController.text.isEmpty) {
+                                          showAlertDialog(context, 'Erreur',
+                                              "Veuillez fournir votre nom de d'utilisateur ou email et mot de passe");
+                                          return;
+                                        }
+                                        print(_connectivityResult);
+                                        if (_connectivityResult !=
+                                                ConnectivityResult.mobile &&
+                                            _connectivityResult !=
+                                                ConnectivityResult.wifi) {
+                                          showAlertDialog(context, 'Erreur',
+                                              'Vérifiez votre connection internet');
+                                          return;
+                                        }
                                         _onLoading();
-                                        try {
-                                          final ParseUser user = ParseUser(
-                                              usernameController.text,
-                                              passwordController.text,
-                                              usernameController.text);
-                                          final ParseResponse response =
-                                              await user.login();
-                                          if (response.success) {
-                                            callback(response.result);
-                                            if (response.result.get('type') ==
-                                                'cook') {
-                                              Navigator.of(context)
-                                                  .pushNamed('/cookOffer');
-                                            }
-                                            //  else {
-                                            //   Navigator.of(context)
-                                            //       .pushNamed('/clientHome');
-                                            // }
-                                            _offLoading();
-                                          } else {
-                                            showAlertDialog(context, 'Erreur',
-                                                'Email ou mot de passe invalide');
-                                            _offLoading();
+                                        final ParseUser user = ParseUser(
+                                            usernameController.text,
+                                            passwordController.text,
+                                            usernameController.text);
+                                        final ParseResponse response =
+                                            await user.login();
+                                        print('longin');
+                                        if (response.success) {
+                                          callback(response.result);
+                                          if (response.result.get('type') ==
+                                              'cook') {
+                                            Navigator.of(context)
+                                                .pushNamed('/cookOffer');
                                           }
-                                        } catch (e) {
-                                          print(e);
+                                          //  else {
+                                          //   Navigator.of(context)
+                                          //       .pushNamed('/clientHome');
+                                          // }
+                                          _offLoading();
+                                        } else {
+                                          showAlertDialog(context, 'Erreur',
+                                              'Email ou mot de passe invalide');
                                           _offLoading();
                                         }
                                       },
