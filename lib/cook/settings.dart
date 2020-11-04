@@ -67,7 +67,7 @@ class _SettingsState extends State<Settings> {
                         isScrollControlled: true,
                         builder: (BuildContext context) {
                           return FractionallySizedBox(
-                            heightFactor: 0.8,
+                            heightFactor: 0.9,
                             child: EditProfile(),
                           );
                         });

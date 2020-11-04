@@ -106,108 +106,59 @@ class _EditProfileState extends State<EditProfile> {
             },
             converter: (dynamic store) => store.state.user,
             builder: (BuildContext context, dynamic user) {
-              return Scaffold(
-                  body: ListView(children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                  width: 100,
-                ),
-                const Center(
-                  child: Text(
-                    'Modifier vos informations',
-                    style: TextStyle(
-                      fontFamily: 'Amatic',
-                      fontSize: 40,
+              return GestureDetector(
+                onTap: () {
+                  final FocusScopeNode currentFocus = FocusScope.of(context);
+
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                child: Scaffold(
+                    body: ListView(children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                    width: 100,
+                  ),
+                  const Center(
+                    child: Text(
+                      'Modifier vos informations',
+                      style: TextStyle(
+                        fontFamily: 'Amatic',
+                        fontSize: 40,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 50.0, left: 50.0),
-                  child: SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: Divider(color: Colors.teal.shade100)),
-                ),
-                GestureDetector(
-                    onTap: () async {
-                      _image = await getImage(2) as File;
-                      setState(() {
-                        _avatar = Container(
-                          width: 110.0,
-                          height: 110.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover, image: FileImage(_image))),
-                        );
-                      });
-                    },
-                    child: Container(
-                      child: Center(child: Container(child: _avatar)),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      controller: usernameController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        prefixIcon: Icon(Icons.account_box),
-                        hintText: "Nom d'utilisateur",
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(40.0),
-                          ),
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        prefixIcon: Icon(Icons.email),
-                        hintText: 'Email',
-                      ),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                      controller: passwordController,
-                      onChanged: (String val) {
-                        if (_tapped != true)
-                          setState(() {
-                            _tapped = true;
-                          });
+                  Padding(
+                    padding: const EdgeInsets.only(right: 50.0, left: 50.0),
+                    child: SizedBox(
+                        height: 20,
+                        width: 100,
+                        child: Divider(color: Colors.teal.shade100)),
+                  ),
+                  GestureDetector(
+                      onTap: () async {
+                        _image = await getImage(2) as File;
+                        setState(() {
+                          _avatar = Container(
+                            width: 110.0,
+                            height: 110.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: FileImage(_image))),
+                          );
+                        });
                       },
-                      obscureText: true,
-                      decoration: const InputDecoration(
+                      child: Container(
+                        child: Center(child: Container(child: _avatar)),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextField(
+                        controller: usernameController,
+                        decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(40.0),
@@ -224,22 +175,16 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           fillColor: Colors.white,
                           filled: true,
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'Mot de passe',
-                          contentPadding: EdgeInsets.all(20.0))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                      keyboardType: TextInputType.phone,
-                      controller: phoneController,
-                      onChanged: (String val) {
-                        if (_tapped != true)
-                          setState(() {
-                            _tapped = true;
-                          });
-                      },
-                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.account_box),
+                          hintText: "Nom d'utilisateur",
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(40.0),
@@ -256,50 +201,99 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           fillColor: Colors.white,
                           filled: true,
-                          prefixIcon: Icon(Icons.phone),
-                          hintText: 'Numéro de téléphone',
-                          contentPadding: EdgeInsets.all(20.0))),
-                ),
-                if (user.type == 'cook')
-                  Column(
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Sélectionnez au moins une type de cuisines:',
-                            style: TextStyle(
-                              fontFamily: 'LatoLight',
-                              fontSize: 18,
+                          prefixIcon: Icon(Icons.email),
+                          hintText: 'Email',
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                        controller: passwordController,
+                        onChanged: (String val) {
+                          if (_tapped != true)
+                            setState(() {
+                              _tapped = true;
+                            });
+                        },
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            prefixIcon: Icon(Icons.lock),
+                            hintText: 'Mot de passe',
+                            contentPadding: EdgeInsets.all(20.0))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                        keyboardType: TextInputType.phone,
+                        controller: phoneController,
+                        onChanged: (String val) {
+                          if (_tapped != true)
+                            setState(() {
+                              _tapped = true;
+                            });
+                        },
+                        decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            prefixIcon: Icon(Icons.phone),
+                            hintText: 'Numéro de téléphone',
+                            contentPadding: EdgeInsets.all(20.0))),
+                  ),
+                  if (user.type == 'cook')
+                    Column(
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Sélectionnez au moins une type de cuisines:',
+                              style: TextStyle(
+                                fontFamily: 'LatoLight',
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 5,
-                              child: CheckboxGroup(
-                                  checked: _selectedType,
-                                  labels: _typeCookSec,
-                                  labelStyle: const TextStyle(),
-                                  onChange:
-                                      (bool checked, String val, int idx) {
-                                    if (checked == true &&
-                                        _selectedType.contains(val) != true)
-                                      _selectedType.add(val);
-                                    else
-                                      _selectedType.remove(val);
-                                  }),
-                            ),
-                            Expanded(
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
                                 flex: 5,
                                 child: CheckboxGroup(
                                     checked: _selectedType,
-                                    labels: _typeCookFirst,
+                                    labels: _typeCookSec,
                                     labelStyle: const TextStyle(),
                                     onChange:
                                         (bool checked, String val, int idx) {
@@ -308,134 +302,152 @@ class _EditProfileState extends State<EditProfile> {
                                         _selectedType.add(val);
                                       else
                                         _selectedType.remove(val);
-                                    })),
-                          ]),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Bio:',
-                            style: TextStyle(
-                              fontFamily: 'LatoLight',
-                              fontSize: 18,
+                                    }),
+                              ),
+                              Expanded(
+                                  flex: 5,
+                                  child: CheckboxGroup(
+                                      checked: _selectedType,
+                                      labels: _typeCookFirst,
+                                      labelStyle: const TextStyle(),
+                                      onChange:
+                                          (bool checked, String val, int idx) {
+                                        if (checked == true &&
+                                            _selectedType.contains(val) != true)
+                                          _selectedType.add(val);
+                                        else
+                                          _selectedType.remove(val);
+                                      })),
+                            ]),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(25, 10, 0, 5),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Bio:',
+                              style: TextStyle(
+                                fontFamily: 'LatoLight',
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextFormField(
-                            controller: bioController,
-                            decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(40.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextFormField(
+                              controller: bioController,
+                              decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0.0),
                                   ),
-                                  borderSide: BorderSide(
-                                      color: Colors.transparent, width: 0.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(40.0),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(40.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 0.0),
                                   ),
-                                  borderSide: BorderSide(
-                                      color: Colors.transparent, width: 0.0),
-                                ),
-                                fillColor: Colors.white,
-                                filled: true,
-                                prefixIcon: Icon(Icons.account_circle),
-                                contentPadding: EdgeInsets.all(20.0))),
-                      ),
-                    ],
-                  ),
-                const SizedBox(height: 30),
-                StoreConnector<dynamic, Function(dynamic)>(
-                    converter: (dynamic store) {
-                  return (dynamic user) {
-                    return store
-                        .dispatch(MyAction(BlablacookActions.UpdateUser, user));
-                  };
-                }, builder: (BuildContext context, dynamic callback) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-                    child: ButtonTheme(
-                      minWidth: 160.0,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(color: Colors.transparent)),
-                        onPressed: _loading
-                            ? null
-                            : () async {
-                                _onLoading();
-                                final bool cooker =
-                                    // ignore: avoid_bool_literals_in_conditional_expressions
-                                    user.type == 'cook' ? true : false;
-                                if (checkForm(
-                                    context,
-                                    usernameController.text,
-                                    emailController.text,
-                                    passwordController.text,
-                                    bioController.text,
-                                    phoneController.text,
-                                    cooker,
-                                    _selectedType)) {
-                                  final dynamic parseUser =
-                                      await ParseUser.currentUser();
-                                  parseUser.set('cookType', _selectedType);
-                                  parseUser.set('bio', bioController.text);
-                                  parseUser.set('phone', phoneController.text);
-                                  parseUser.set(
-                                      'username', usernameController.text);
-                                  if (_tapped == true)
-                                    parseUser.set(
-                                        'password', passwordController.text);
-                                  if (_image != null) {
-                                    final ParseResponse fileResponse =
-                                        await ParseFile(_image, debug: true)
-                                            .save();
-                                    if (fileResponse.success) {
-                                      final ParseFile parseFile =
-                                          fileResponse.result as ParseFile;
-                                      parseUser.set('img', parseFile);
-                                    } else {
-                                      _offLoading();
-                                      showAlertDialog(context, 'Erreur',
-                                          "Erreur de sauvegarde d'image");
-                                    }
-                                  }
-                                  final dynamic response =
-                                      await parseUser.save();
-                                  if (response.success == true) {
-                                    callback(response.result);
-                                    showAlertDialog(context, 'Réussi',
-                                        'Sauvegarde prise en compte');
-                                    _offLoading();
-                                  } else {
-                                    showAlertDialog(context, 'Erreur',
-                                        'Sauvegarde non prise en compte');
-                                    _offLoading();
-                                  }
-                                } else
-                                  _offLoading();
-                              },
-                        child: const Text('Sauvegarder',
-                            style: TextStyle(fontSize: 20)),
-                        color: Colors.orange,
-                        textColor: Colors.white,
-                      ),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  prefixIcon: Icon(Icons.account_circle),
+                                  contentPadding: EdgeInsets.all(20.0))),
+                        ),
+                      ],
                     ),
-                  );
-                }),
-                if (_loading)
-                  LoadingBumpingLine.circle(
-                    size: 30,
-                    backgroundColor: Colors.orange,
-                    duration: const Duration(milliseconds: 500),
-                  ),
-                const SizedBox(height: 60),
-              ]));
+                  const SizedBox(height: 30),
+                  StoreConnector<dynamic, Function(dynamic)>(
+                      converter: (dynamic store) {
+                    return (dynamic user) {
+                      return store.dispatch(
+                          MyAction(BlablacookActions.UpdateUser, user));
+                    };
+                  }, builder: (BuildContext context, dynamic callback) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+                      child: ButtonTheme(
+                        minWidth: 160.0,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side:
+                                  const BorderSide(color: Colors.transparent)),
+                          onPressed: _loading
+                              ? null
+                              : () async {
+                                  _onLoading();
+                                  final bool cooker =
+                                      // ignore: avoid_bool_literals_in_conditional_expressions
+                                      user.type == 'cook' ? true : false;
+                                  if (checkForm(
+                                      context,
+                                      usernameController.text,
+                                      emailController.text,
+                                      passwordController.text,
+                                      bioController.text,
+                                      phoneController.text,
+                                      cooker,
+                                      _selectedType)) {
+                                    final dynamic parseUser =
+                                        await ParseUser.currentUser();
+                                    parseUser.set('cookType', _selectedType);
+                                    parseUser.set('bio', bioController.text);
+                                    parseUser.set(
+                                        'phone', phoneController.text);
+                                    parseUser.set(
+                                        'username', usernameController.text);
+                                    if (_tapped == true)
+                                      parseUser.set(
+                                          'password', passwordController.text);
+                                    if (_image != null) {
+                                      final ParseResponse fileResponse =
+                                          await ParseFile(_image, debug: true)
+                                              .save();
+                                      if (fileResponse.success) {
+                                        final ParseFile parseFile =
+                                            fileResponse.result as ParseFile;
+                                        parseUser.set('img', parseFile);
+                                      } else {
+                                        _offLoading();
+                                        showAlertDialog(context, 'Erreur',
+                                            "Erreur de sauvegarde d'image");
+                                      }
+                                    }
+                                    final dynamic response =
+                                        await parseUser.save();
+                                    if (response.success == true) {
+                                      callback(response.result);
+                                      showAlertDialog(context, 'Réussi',
+                                          'Sauvegarde prise en compte');
+                                      _offLoading();
+                                    } else {
+                                      showAlertDialog(context, 'Erreur',
+                                          'Sauvegarde non prise en compte');
+                                      _offLoading();
+                                    }
+                                  } else
+                                    _offLoading();
+                                },
+                          child: const Text('Sauvegarder',
+                              style: TextStyle(fontSize: 20)),
+                          color: Colors.orange,
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    );
+                  }),
+                  if (_loading)
+                    LoadingBumpingLine.circle(
+                      size: 30,
+                      backgroundColor: Colors.orange,
+                      duration: const Duration(milliseconds: 500),
+                    ),
+                  const SizedBox(height: 60),
+                ])),
+              );
             }));
   }
 }
