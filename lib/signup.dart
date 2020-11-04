@@ -352,6 +352,7 @@ class _SignupState extends State<Signup> {
                                                 usernameController.text,
                                                 emailController.text,
                                                 passwordController.text,
+                                                bioController.text,
                                                 _cooker,
                                                 _selectedType))
                                               try {

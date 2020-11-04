@@ -40,7 +40,7 @@ Future getImage(int way) async {
 }
 
 bool checkForm(BuildContext context, String username, String email,
-    String password, bool cook, List<String> selectedType) {
+    String password, String bio, bool cook, List<String> selectedType) {
   if (!username.isNotEmpty || password.isEmpty || email.isEmpty) {
     showAlertDialog(context, 'Erreur',
         "Veuillez remplir l'email , le nom d'utilisateur et le mot de passe.");
@@ -62,6 +62,11 @@ bool checkForm(BuildContext context, String username, String email,
   if (cook == true && selectedType.isEmpty) {
     showAlertDialog(context, 'Erreur',
         'Veuillez sélectionner au moins un type de cuisine.');
+    return false;
+  }
+  if (bio.length > 136) {
+    showAlertDialog(
+        context, 'Erreur', 'Votre bio ne doit pas dépasser 136 caractère.');
     return false;
   }
   return true;
