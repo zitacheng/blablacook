@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 dynamic showAlertDialog(BuildContext context, String title, String message) {
   final Widget okButton = FlatButton(
@@ -70,4 +71,23 @@ bool checkForm(BuildContext context, String username, String email,
     return false;
   }
   return true;
+}
+
+// ignore: avoid_void_async
+void createEmail(String dest) async {
+  final String emailUri = 'mailto:' + dest + '?subject=News&body=New%20plugin';
+
+  if (await canLaunch(emailUri)) {
+    await launch(emailUri);
+  } else {
+    throw 'Could not launch email to $dest';
+  }
+}
+
+Future<void> makePhoneCall(String url) async {
+  if (await canLaunch('tel:' + url)) {
+    await launch('tel:' + url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }

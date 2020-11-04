@@ -99,6 +99,8 @@ class _BookState extends State<Book> {
                           color: Colors.greenAccent,
                           icon: Icons.check,
                           onTap: () {
+                            // makePhoneCall('33620296517');
+                            // createEmail('test@gmail.com');
                             choiceBooking(data, true);
                           },
                         ),
