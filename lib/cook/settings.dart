@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import '../utils.dart';
 import 'editProfile.dart';
@@ -11,6 +12,20 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  bool _loading = false;
+
+  void _onLoading() {
+    setState(() {
+      _loading = true;
+    });
+  }
+
+  void _offLoading() {
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,22 +84,34 @@ class _SettingsState extends State<Settings> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: const BorderSide(color: Colors.transparent)),
-                  onPressed: () async {
-                    final dynamic currentUser = await ParseUser.currentUser();
-                    final dynamic res = await currentUser.logout();
-                    if (res.success == true) {
-                      Navigator.of(context).pushNamed('/');
-                    } else {
-                      showAlertDialog(
-                          context, 'Erreur', 'Erreur de déconnexion');
-                    }
-                  },
+                  onPressed: _loading
+                      ? null
+                      : () async {
+                          _onLoading();
+                          final dynamic currentUser =
+                              await ParseUser.currentUser();
+                          final dynamic res = await currentUser.logout();
+                          if (res.success == true) {
+                            Navigator.of(context).pushNamed('/');
+                          } else {
+                            showAlertDialog(
+                                context, 'Erreur', 'Erreur de déconnexion');
+                          }
+                          _offLoading();
+                        },
                   child:
                       const Text('Déconnexion', style: TextStyle(fontSize: 20)),
                   color: Colors.orange,
                   textColor: Colors.white,
                 ),
               ),
+              if (_loading)
+                LoadingBumpingLine.circle(
+                  size: 30,
+                  backgroundColor: Colors.orange,
+                  duration: const Duration(milliseconds: 500),
+                ),
+              const SizedBox(height: 60),
             ],
           ),
         );

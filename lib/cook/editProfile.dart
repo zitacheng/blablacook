@@ -63,6 +63,7 @@ class _EditProfileState extends State<EditProfile> {
     passwordController.selection = TextSelection.fromPosition(
         TextPosition(offset: passwordController.text.length));
 
+    bioController.text = user.bio as String;
     bioController.selection = TextSelection.fromPosition(
         TextPosition(offset: bioController.text.length));
 
@@ -330,44 +331,59 @@ class _EditProfileState extends State<EditProfile> {
                             ? null
                             : () async {
                                 _onLoading();
-                                try {
-                                  final dynamic user =
-                                      await ParseUser.currentUser();
-                                  user.set('cookType', _selectedType);
-                                  user.set('bio', bioController.text);
-                                  user.set('username', usernameController.text);
-                                  if (_tapped == true)
-                                    user.set(
-                                        'password', passwordController.text);
-                                  if (_image != null) {
-                                    final ParseResponse fileResponse =
-                                        await ParseFile(_image, debug: true)
-                                            .save();
-                                    if (fileResponse.success) {
-                                      final ParseFile parseFile =
-                                          fileResponse.result as ParseFile;
-                                      user.set('img', parseFile);
-                                    } else {
-                                      _offLoading();
-                                      showAlertDialog(context, 'Erreur',
-                                          "Erreur de sauvegarde d'image");
+                                final bool cooker =
+                                    // ignore: avoid_bool_literals_in_conditional_expressions
+                                    user.type == 'cook' ? true : false;
+                                if (checkForm(
+                                    context,
+                                    usernameController.text,
+                                    emailController.text,
+                                    passwordController.text,
+                                    bioController.text,
+                                    cooker,
+                                    _selectedType))
+                                  try {
+                                    final dynamic parseUser =
+                                        await ParseUser.currentUser();
+                                    parseUser.set('cookType', _selectedType);
+                                    parseUser.set('bio', bioController.text);
+                                    parseUser.set(
+                                        'username', usernameController.text);
+                                    if (_tapped == true)
+                                      parseUser.set(
+                                          'password', passwordController.text);
+                                    if (_image != null) {
+                                      final ParseResponse fileResponse =
+                                          await ParseFile(_image, debug: true)
+                                              .save();
+                                      if (fileResponse.success) {
+                                        final ParseFile parseFile =
+                                            fileResponse.result as ParseFile;
+                                        parseUser.set('img', parseFile);
+                                      } else {
+                                        _offLoading();
+                                        showAlertDialog(context, 'Erreur',
+                                            "Erreur de sauvegarde d'image");
+                                      }
                                     }
-                                  }
-                                  final dynamic response = await user.save();
-                                  if (response.success == true) {
-                                    callback(response.result);
-                                    showAlertDialog(context, 'Réussi',
-                                        'Sauvegarde prise en compte');
+                                    final dynamic response =
+                                        await parseUser.save();
+                                    if (response.success == true) {
+                                      callback(response.result);
+                                      showAlertDialog(context, 'Réussi',
+                                          'Sauvegarde prise en compte');
+                                      _offLoading();
+                                    } else {
+                                      showAlertDialog(context, 'Erreur',
+                                          'Sauvegarde non prise en compte');
+                                      _offLoading();
+                                    }
+                                  } catch (e) {
                                     _offLoading();
-                                  } else {
-                                    showAlertDialog(context, 'Erreur',
-                                        'Sauvegarde non prise en compte');
-                                    _offLoading();
+                                    print(e);
                                   }
-                                } catch (e) {
+                                else
                                   _offLoading();
-                                  print(e);
-                                }
                               },
                         child: const Text('Sauvegarder',
                             style: TextStyle(fontSize: 20)),
