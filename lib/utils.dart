@@ -40,15 +40,10 @@ Future getImage(int way) async {
   return null;
 }
 
-bool isValidPhoneNumber(String phoneNumber) {
-  const String pattern = r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
-  final RegExp regExp = RegExp(pattern);
-
-  if (phoneNumber == null || phoneNumber.isEmpty) {
-    return false;
-  }
-
-  if (!regExp.hasMatch(phoneNumber)) {
+bool isValidPhoneNumber(String phone) {
+  if (phone.length < 10 ||
+      phone.length > 13 ||
+      (phone[0] != '+' && phone[0] != '0')) {
     return false;
   }
   return true;
