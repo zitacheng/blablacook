@@ -20,6 +20,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   bool _tapped = false;
   File _image;
@@ -59,6 +60,7 @@ class _EditProfileState extends State<EditProfile> {
     emailController.text = user.email as String;
     emailController.selection = TextSelection.fromPosition(
         TextPosition(offset: emailController.text.length));
+
     passwordController.text = user.email as String;
     passwordController.selection = TextSelection.fromPosition(
         TextPosition(offset: passwordController.text.length));
@@ -66,6 +68,10 @@ class _EditProfileState extends State<EditProfile> {
     bioController.text = user.bio as String;
     bioController.selection = TextSelection.fromPosition(
         TextPosition(offset: bioController.text.length));
+
+    phoneController.text = user.phone as String;
+    phoneController.selection = TextSelection.fromPosition(
+        TextPosition(offset: phoneController.text.length));
 
     for (dynamic i = 0; i < user.cookType.length == true; i++) {
       _selectedType.add(user.cookType[i] as String);
@@ -222,6 +228,39 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: 'Mot de passe',
                           contentPadding: EdgeInsets.all(20.0))),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                      keyboardType: TextInputType.phone,
+                      controller: phoneController,
+                      onChanged: (String val) {
+                        if (_tapped != true)
+                          setState(() {
+                            _tapped = true;
+                          });
+                      },
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40.0),
+                            ),
+                            borderSide: BorderSide(
+                                color: Colors.transparent, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40.0),
+                            ),
+                            borderSide: BorderSide(
+                                color: Colors.transparent, width: 0.0),
+                          ),
+                          fillColor: Colors.white,
+                          filled: true,
+                          prefixIcon: Icon(Icons.phone),
+                          hintText: 'Numéro de téléphone',
+                          contentPadding: EdgeInsets.all(20.0))),
+                ),
                 if (user.type == 'cook')
                   Column(
                     children: <Widget>[
@@ -340,12 +379,14 @@ class _EditProfileState extends State<EditProfile> {
                                     emailController.text,
                                     passwordController.text,
                                     bioController.text,
+                                    phoneController.text,
                                     cooker,
                                     _selectedType)) {
                                   final dynamic parseUser =
                                       await ParseUser.currentUser();
                                   parseUser.set('cookType', _selectedType);
                                   parseUser.set('bio', bioController.text);
+                                  parseUser.set('phone', phoneController.text);
                                   parseUser.set(
                                       'username', usernameController.text);
                                   if (_tapped == true)

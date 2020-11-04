@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blablacook/actions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +96,17 @@ class _BookState extends State<Book> {
                         ),
                       ),
                       secondaryActions: <Widget>[
+                        IconSlideAction(
+                          caption: 'Appeler',
+                          color: Colors.blueAccent,
+                          icon: Icons.phone,
+                          onTap: () {
+                            inspect(data);
+                            print(data.get('client').get('email'));
+                            print(data.get('client').get('username'));
+                            // makePhoneCall('33620296517');
+                          },
+                        ),
                         IconSlideAction(
                           caption: 'Accepter',
                           color: Colors.greenAccent,

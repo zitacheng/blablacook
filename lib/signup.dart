@@ -21,6 +21,7 @@ class _SignupState extends State<Signup> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   bool _cooker = false;
   File _image;
   bool _loading = false;
@@ -203,6 +204,36 @@ class _SignupState extends State<Signup> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(16.0),
+                                  child: TextField(
+                                      keyboardType: TextInputType.phone,
+                                      controller: phoneController,
+                                      obscureText: true,
+                                      decoration: const InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(40.0),
+                                            ),
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 0.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(40.0),
+                                            ),
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 0.0),
+                                          ),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          prefixIcon: Icon(Icons.phone),
+                                          hintText: 'Numéro de téléphone',
+                                          contentPadding:
+                                              EdgeInsets.all(20.0))),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -354,6 +385,7 @@ class _SignupState extends State<Signup> {
                                                 emailController.text,
                                                 passwordController.text,
                                                 bioController.text,
+                                                phoneController.text,
                                                 _cooker,
                                                 _selectedType)) {
                                               final ConnectivityResult
@@ -384,6 +416,8 @@ class _SignupState extends State<Signup> {
                                                   'bio', bioController.text);
                                               user.set('username',
                                                   usernameController.text);
+                                              user.set('phone',
+                                                  phoneController.text);
                                               if (_image != null) {
                                                 final ParseResponse
                                                     fileResponse =

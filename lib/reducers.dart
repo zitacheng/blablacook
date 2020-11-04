@@ -20,10 +20,11 @@ User _userReducer(User state, dynamic action) {
       action.value.get('username') as String,
       action.value.objectId as String,
       action.value.get('rate') as double,
+      action.value.get('phone') as String,
     );
   }
   if (action.key == BlablacookActions.CleareUser) {
-    return User('', '', '', null, null, '', '', 0);
+    return User('', '', '', null, null, '', '', 0, '');
   }
   return state;
 }
