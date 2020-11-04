@@ -369,6 +369,7 @@ class _SignupState extends State<Signup> {
                                                     context,
                                                     'Erreur',
                                                     'Vérifiez votre connection internet');
+                                                _offLoading();
                                                 return;
                                               }
                                               final ParseUser user = ParseUser(
