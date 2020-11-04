@@ -97,6 +97,15 @@ class _BookState extends State<Book> {
                       ),
                       secondaryActions: <Widget>[
                         IconSlideAction(
+                          caption: 'Email',
+                          color: Colors.blueGrey,
+                          icon: Icons.mail_outline,
+                          onTap: () {
+                            createEmail(
+                                data.get('client').get('email') as String);
+                          },
+                        ),
+                        IconSlideAction(
                           caption: 'Appeler',
                           color: Colors.blueAccent,
                           icon: Icons.phone,
