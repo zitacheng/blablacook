@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -346,54 +347,68 @@ class _SignupState extends State<Signup> {
                                         ? null
                                         : () async {
                                             _onLoading();
-                                            try {
-                                              final ParseUser user = ParseUser(
-                                                  emailController.text,
-                                                  passwordController.text,
-                                                  emailController.text);
-                                              user.set('type',
-                                                  _cooker ? 'cook' : 'client');
-                                              user.set(
-                                                  'cookType', _selectedType);
-                                              user.set(
-                                                  'bio', bioController.text);
-                                              user.set('username',
-                                                  usernameController.text);
-                                              if (_image != null) {
-                                                final ParseResponse
-                                                    fileResponse =
-                                                    await ParseFile(_image,
-                                                            debug: true)
-                                                        .save();
-                                                if (fileResponse.success) {
-                                                  final ParseFile parseFile =
-                                                      fileResponse.result
-                                                          as ParseFile;
-                                                  user.set('img', parseFile);
-                                                } else {
+                                            if (checkForm(
+                                                context,
+                                                usernameController.text,
+                                                emailController.text,
+                                                passwordController.text,
+                                                _cooker,
+                                                _selectedType))
+                                              try {
+                                                final ParseUser user =
+                                                    ParseUser(
+                                                        usernameController.text,
+                                                        passwordController.text,
+                                                        emailController.text);
+                                                user.set(
+                                                    'type',
+                                                    _cooker
+                                                        ? 'cook'
+                                                        : 'client');
+                                                user.set(
+                                                    'cookType', _selectedType);
+                                                user.set(
+                                                    'bio', bioController.text);
+                                                user.set('username',
+                                                    usernameController.text);
+                                                if (_image != null) {
+                                                  final ParseResponse
+                                                      fileResponse =
+                                                      await ParseFile(_image,
+                                                              debug: true)
+                                                          .save();
+                                                  if (fileResponse.success) {
+                                                    final ParseFile parseFile =
+                                                        fileResponse.result
+                                                            as ParseFile;
+                                                    user.set('img', parseFile);
+                                                  } else {
+                                                    _offLoading();
+                                                    showAlertDialog(
+                                                        context,
+                                                        'Erreur',
+                                                        "Erreur de sauvegarde d'image");
+                                                  }
+                                                }
+                                                final ParseResponse response =
+                                                    await user.signUp();
+                                                if (response.success) {
                                                   _offLoading();
+                                                  Navigator.of(context).pop();
+                                                } else {
+                                                  inspect(response);
                                                   showAlertDialog(
                                                       context,
                                                       'Erreur',
-                                                      "Erreur de sauvegarde d'image");
+                                                      'Email ou mot de passe invalide');
+                                                  _offLoading();
                                                 }
-                                              }
-                                              final ParseResponse response =
-                                                  await user.signUp();
-                                              if (response.success) {
+                                              } catch (e) {
                                                 _offLoading();
-                                                Navigator.of(context).pop();
-                                              } else {
-                                                showAlertDialog(
-                                                    context,
-                                                    'Erreur',
-                                                    'Email ou mot de passe invalide');
-                                                _offLoading();
+                                                print(e);
                                               }
-                                            } catch (e) {
+                                            else
                                               _offLoading();
-                                              print(e);
-                                            }
                                           },
                                     child: const Text("M'inscrire",
                                         style: TextStyle(fontSize: 20)),
