@@ -101,10 +101,13 @@ class _BookState extends State<Book> {
                           color: Colors.blueAccent,
                           icon: Icons.phone,
                           onTap: () {
-                            inspect(data);
-                            print(data.get('client').get('email'));
-                            print(data.get('client').get('username'));
-                            // makePhoneCall('33620296517');
+                            if (data.get('client').get('phone') != null)
+                              makePhoneCall(
+                                  data.get('client').get('phone') as String);
+                            else {
+                              showAlertDialog(context, 'Erreur',
+                                  "Le client n'a pas fournis son numéro de téléphone");
+                            }
                           },
                         ),
                         IconSlideAction(
