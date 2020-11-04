@@ -207,7 +207,6 @@ class _SignupState extends State<Signup> {
                                   child: TextField(
                                       keyboardType: TextInputType.phone,
                                       controller: phoneController,
-                                      obscureText: true,
                                       decoration: const InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(

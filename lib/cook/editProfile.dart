@@ -239,7 +239,6 @@ class _EditProfileState extends State<EditProfile> {
                             _tapped = true;
                           });
                       },
-                      obscureText: true,
                       decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
