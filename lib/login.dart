@@ -18,7 +18,6 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   bool _loading = false;
-  ConnectivityResult _connectivityResult;
 
   void _onLoading() {
     setState(() {
@@ -118,11 +117,7 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 30),
                           StoreConnector<dynamic, Function(dynamic)>(
-                              onInit: (dynamic store) async {
-                            // ignore: unnecessary_parenthesis
-                            _connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                          }, converter: (dynamic store) {
+                              converter: (dynamic store) {
                             return (dynamic user) {
                               return store.dispatch(
                                   MyAction(BlablacookActions.UpdateUser, user));
@@ -144,10 +139,13 @@ class _LoginState extends State<Login> {
                                               "Veuillez fournir votre nom de d'utilisateur ou email et mot de passe");
                                           return;
                                         }
-                                        print(_connectivityResult);
-                                        if (_connectivityResult !=
+                                        final ConnectivityResult
+                                            connectivityResult =
+                                            await Connectivity()
+                                                .checkConnectivity();
+                                        if (connectivityResult !=
                                                 ConnectivityResult.mobile &&
-                                            _connectivityResult !=
+                                            connectivityResult !=
                                                 ConnectivityResult.wifi) {
                                           showAlertDialog(context, 'Erreur',
                                               'Vérifiez votre connection internet');
