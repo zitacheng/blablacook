@@ -68,7 +68,7 @@ class _SignupState extends State<Signup> {
                           alignment: Alignment.center,
                           color: Colors.teal[100 * (index % 9)],
                           child: Container(
-                            margin: const EdgeInsets.only(top: 60.0),
+                            margin: const EdgeInsets.only(top: 40.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[

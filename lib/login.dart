@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                     return Container(
-                      margin: const EdgeInsets.only(top: 80.0),
+                      margin: const EdgeInsets.fromLTRB(0, 40.0, 0, 50.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
