@@ -93,7 +93,6 @@ class _AddState extends State<Add> {
                                 PopupMenuButton<int>(
                                   icon: const Icon(Icons.file_upload),
                                   onSelected: (int idx) async {
-                                    print(idx);
                                     _image = await getImage(idx) as File;
                                     setState(() {});
                                   },

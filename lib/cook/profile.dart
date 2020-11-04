@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import '../actions.dart';
+import '../utils.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _ProfileState extends State<Profile> {
       height: 110,
     ),
   );
+
   Future<ParseResponse> fetchPicture(String id) async {
     final QueryBuilder<ParseObject> queryPost =
         QueryBuilder<ParseObject>(ParseObject('Picture'))
@@ -28,6 +30,48 @@ class _ProfileState extends State<Profile> {
 
     final ParseResponse apiResponse = await queryPost.query();
     return apiResponse;
+  }
+
+  // ignore: avoid_void_async
+  void deletePic(
+      dynamic data, BuildContext context, dynamic callback, String id) async {
+    final dynamic response = await data.delete();
+    if (response.success == true) {
+      final ParseResponse res = await fetchPicture(id);
+      callback(res.results);
+      Navigator.of(context).pop();
+    } else {
+      showAlertDialog(context, 'Erreur', 'veuillez réessayer');
+    }
+  }
+
+  dynamic showConfirmDialog(BuildContext context, String title, String message,
+      dynamic data, dynamic callback, String id) {
+    final Widget okButton = FlatButton(
+      child: const Text('oui'),
+      onPressed: () {
+        deletePic(data, context, callback, id);
+      },
+    );
+    final Widget cancelBtn = FlatButton(
+      child: const Text('Annuler'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    final AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: <Widget>[okButton, cancelBtn],
+    );
+
+    showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -152,18 +196,45 @@ class _ProfileState extends State<Profile> {
                             crossAxisCount: 2,
                             children: <Widget>[
                               for (dynamic val in state.pics.data)
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Image.network(
-                                      val.get('img').url as String,
-                                      fit: BoxFit.cover,
-                                      width: 120,
-                                      height: 120,
-                                    ),
-                                  ),
-                                ),
+                                Stack(
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.center,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                          child: Image.network(
+                                            val.get('img').url as String,
+                                            fit: BoxFit.cover,
+                                            width: 170,
+                                            height: 170,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showConfirmDialog(
+                                                context,
+                                                'Suppression',
+                                                'êtes vous sure de supprimer',
+                                                val,
+                                                callback,
+                                                state.user.id as String);
+                                          },
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.red,
+                                                shape: BoxShape.circle),
+                                            child: const Icon(
+                                                Icons.delete_outline,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                    ])
                             ]),
                       )
                     else

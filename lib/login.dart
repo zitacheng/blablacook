@@ -158,13 +158,12 @@ class _LoginState extends State<Login> {
                                             usernameController.text);
                                         final ParseResponse response =
                                             await user.login();
-                                        print('longin');
                                         if (response.success) {
                                           callback(response.result);
                                           if (response.result.get('type') ==
                                               'cook') {
                                             Navigator.of(context)
-                                                .pushNamed('/cookOffer');
+                                                .pushNamed('/cook');
                                           }
                                           //  else {
                                           //   Navigator.of(context)

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         // ignore: always_specify_types
         routes: {
           '/': (BuildContext context) => const Login(),
-          '/cookOffer': (BuildContext context) => cookHome.Home(),
+          '/cook': (BuildContext context) => cookHome.Home(),
         },
         title: 'blablacook',
         theme: ThemeData(
