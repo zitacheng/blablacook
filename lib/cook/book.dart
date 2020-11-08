@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-
 import '../utils.dart';
 
 class Book extends StatefulWidget {
@@ -122,8 +121,6 @@ class _BookState extends State<Book> {
                           color: Colors.greenAccent,
                           icon: Icons.check,
                           onTap: () {
-                            // makePhoneCall('33620296517');
-                            // createEmail('test@gmail.com');
                             choiceBooking(data, true);
                           },
                         ),

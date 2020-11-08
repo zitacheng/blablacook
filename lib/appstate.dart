@@ -34,12 +34,21 @@ class Book {
   Book(this.data);
 }
 
+class Cook {
+  // ignore: avoid_init_to_null
+  List<ParseObject> data = null;
+
+  // ignore: sort_constructors_first
+  Cook(this.data);
+}
+
 @immutable
 class AppState {
   final User user;
   final Picture pics;
   final Book book;
+  final Cook cook;
 
   // ignore: sort_constructors_first
-  const AppState({this.user, this.pics, this.book});
+  const AppState({this.user, this.pics, this.book, this.cook});
 }

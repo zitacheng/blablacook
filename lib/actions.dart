@@ -4,7 +4,9 @@ enum BlablacookActions {
   UpdatePic,
   ClearPic,
   UpdateBook,
-  ClearBook
+  ClearBook,
+  UpdateCook,
+  ClearCook,
 }
 
 class MyAction {

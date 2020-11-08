@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:blablacook/cook/home.dart' as cookHome;
 // ignore: library_prefixes
 import 'package:blablacook/client/home.dart' as clientHome;
+import 'package:blablacook/client/cookProfile.dart';
 import 'login.dart';
 import 'reducers.dart';
 
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           '/': (BuildContext context) => const Login(),
           '/cook': (BuildContext context) => cookHome.Home(),
           '/client': (BuildContext context) => clientHome.Home(),
+          '/cookProfile': (BuildContext context) => CookProfile(),
         },
         title: 'blablacook',
         theme: ThemeData(

@@ -6,7 +6,8 @@ AppState appReducer(AppState state, dynamic action) {
   return AppState(
       user: _userReducer(state.user, action),
       pics: _picsReducer(state.pics, action),
-      book: _bookReducer(state.book, action));
+      book: _bookReducer(state.book, action),
+      cook: _cookReducer(state.cook, action));
 }
 
 User _userReducer(User state, dynamic action) {
@@ -51,6 +52,20 @@ Book _bookReducer(Book state, dynamic action) {
   }
   if (action.key == BlablacookActions.ClearPic) {
     return Book(
+      null,
+    );
+  }
+  return state;
+}
+
+Cook _cookReducer(Cook state, dynamic action) {
+  if (action.key == BlablacookActions.UpdateCook) {
+    return Cook(
+      action.value as List<ParseObject>,
+    );
+  }
+  if (action.key == BlablacookActions.ClearCook) {
+    return Cook(
       null,
     );
   }
