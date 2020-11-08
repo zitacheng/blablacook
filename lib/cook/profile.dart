@@ -132,7 +132,10 @@ class _ProfileState extends State<Profile> {
                                     padding: const EdgeInsets.only(bottom: 5.0),
                                     child: RatingBarIndicator(
                                       rating: state.user.rate != null
-                                          ? state.user.rate as double
+                                          ? state.user.rate.reduce(
+                                                  (dynamic a, dynamic b) =>
+                                                      a + b) /
+                                              state.user.rate.length as double
                                           : 0.0,
                                       direction: Axis.horizontal,
                                       itemCount: 5,
