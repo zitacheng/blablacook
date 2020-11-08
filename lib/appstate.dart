@@ -7,7 +7,7 @@ class User {
   String bio = '';
   String username = '';
   String id = '';
-  double rate = 0;
+  List<dynamic> rate;
   String phone = '';
   // ignore: avoid_init_to_null
   List<dynamic> cookType = null;
