@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:blablacook/signup.dart';
 import 'package:blablacook/utils.dart';
 import 'package:connectivity/connectivity.dart';
@@ -168,8 +166,6 @@ class _LoginState extends State<Login> {
                                           usernameController.text);
                                       final ParseResponse response =
                                           await user.login();
-                                      inspect(response);
-                                      inspect(response.error);
                                       if (response.success) {
                                         callback(response.result);
                                         if (response.result.get('type') ==

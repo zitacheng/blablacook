@@ -76,7 +76,6 @@ class _EditProfileState extends State<EditProfile> {
     for (dynamic i = 0; i < user.cookType.length == true; i++) {
       _selectedType.add(user.cookType[i] as String);
     }
-    inspect(_selectedType);
 
     if (user.img != null && _image == null)
       _avatar = ClipRRect(
