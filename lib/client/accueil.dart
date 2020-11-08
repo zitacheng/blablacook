@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
@@ -9,15 +7,16 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  bool _loading = true;
-  List<String> _usernames = List<String>();
+  final bool _loading = true;
+  final List<String> _usernames = null;
 
-  void fetchCooks() async {
+  Future<ParseResponse> fetchCooks() async {
     final QueryBuilder<ParseObject> queryPost =
         QueryBuilder<ParseObject>(ParseObject('User'));
 
     final ParseResponse apiResponse = await queryPost.query();
     print(apiResponse.results);
+    return apiResponse;
   }
 
   @override
@@ -33,7 +32,7 @@ class _AccueilState extends State<Accueil> {
             ? const Text('Loading...')
             : ListView.builder(
                 itemCount: _usernames.length,
-                itemBuilder: (context, int index) {
+                itemBuilder: (BuildContext context, int index) {
                   return Text(
                     _usernames[index],
                   );
