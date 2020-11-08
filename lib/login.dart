@@ -172,11 +172,12 @@ class _LoginState extends State<Login> {
                                             'cook') {
                                           Navigator.of(context)
                                               .pushNamed('/cook');
+                                        } else if (response.result
+                                                .get('type') ==
+                                            'client') {
+                                          Navigator.of(context)
+                                              .pushNamed('/client');
                                         }
-                                        //  else {
-                                        //   Navigator.of(context)
-                                        //       .pushNamed('/clientHome');
-                                        // }
                                         _offLoading();
                                       } else {
                                         showAlertDialog(context, 'Erreur',
