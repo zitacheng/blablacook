@@ -21,6 +21,16 @@ class _AccueilState extends State<Accueil> {
     return apiResponse;
   }
 
+  // Future<ParseResponse> BookCook(dynamic cook, dynamic client, dynamic date) async {
+  //   final ParseObject query = ParseObject('Book')
+  //     ..set('cook', cook)
+  //     ..set('imclientg', client)
+  //     ..set('cookDate', date);
+  //   final ParseResponse apiResponse = await query.save();
+
+  //   return apiResponse;
+  // }
+
   // ignore: avoid_void_async
   void choiceBooking(dynamic data, bool choice) async {
     // data.set('accepted', choice);
