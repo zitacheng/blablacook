@@ -131,7 +131,9 @@ class _ProfileState extends State<Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 5.0),
                                     child: RatingBarIndicator(
-                                      rating: state.user.rate as double,
+                                      rating: state.user.rate != null
+                                          ? state.user.rate as double
+                                          : 0.0,
                                       direction: Axis.horizontal,
                                       itemCount: 5,
                                       itemSize: 20.0,
