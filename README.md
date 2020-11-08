@@ -13,7 +13,7 @@ Pour lancer l'application:
 git clone https://github.com/zitacheng/blablacook.git
 ```
 
-- Taper cette commander dans un terminal dans la racine du dossier Blablacook pour lancer l'application en mode debug
+- Taper cette commander dans un terminal à la racine du dossier Blablacook pour lancer l'application en mode debug
 
 ```sh
 flutter run
